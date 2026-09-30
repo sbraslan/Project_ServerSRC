@@ -9,7 +9,7 @@ SVN_VERSION = $(shell svnversion -n -c . | cut -d':' -f2)
 BIN     = ./libsql.a
 
 IFLAGS = -I/usr/local/include/
-CFLAGS  = $(IFLAGS) -m32 -Wall -O2 -pipe -D_THREAD_SAFE -fno-exceptions
+CFLAGS  = $(IFLAGS) -m64 -Wall -O2 -pipe -D_THREAD_SAFE -fno-exceptions
 CFLAGS += -std=c++20
 
 LIBS =
