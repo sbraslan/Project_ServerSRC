@@ -1340,17 +1340,19 @@ typedef struct command_move
 	uint8_t bFunc;
 	uint8_t bArg;
 	uint8_t bRot;
-	long lX;
-	long lY;
+	int32_t lX;
+	int32_t lY;
 	uint32_t dwTime;
 } TPacketCGMove;
+static_assert(sizeof(TPacketCGMove) == 16, "TPacketCGMove wire size changed");
 
 typedef struct command_sync_position_element
 {
 	uint32_t dwVID;
-	long lX;
-	long lY;
+	int32_t lX;
+	int32_t lY;
 } TPacketCGSyncPositionElement;
+static_assert(sizeof(TPacketCGSyncPositionElement) == 12, "TPacketCGSyncPositionElement wire size changed");
 
 // location sync
 typedef struct command_sync_position // variable packets
@@ -1363,18 +1365,20 @@ typedef struct command_fly_targeting
 {
 	uint8_t bHeader;
 	uint32_t dwTargetVID;
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 } TPacketCGFlyTargeting;
+static_assert(sizeof(TPacketCGFlyTargeting) == 13, "TPacketCGFlyTargeting wire size changed");
 
 typedef struct packet_fly_targeting
 {
 	uint8_t bHeader;
 	uint32_t dwShooterVID;
 	uint32_t dwTargetVID;
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 } TPacketGCFlyTargeting;
+static_assert(sizeof(TPacketGCFlyTargeting) == 17, "TPacketGCFlyTargeting wire size changed");
 
 typedef struct packet_shoot
 {
@@ -2583,11 +2587,12 @@ typedef struct packet_move
 	uint8_t bArg;
 	uint8_t bRot;
 	uint32_t dwVID;
-	long lX;
-	long lY;
+	int32_t lX;
+	int32_t lY;
 	uint32_t dwTime;
 	uint32_t dwDuration;
 } TPacketGCMove;
+static_assert(sizeof(TPacketGCMove) == 24, "TPacketGCMove wire size changed");
 
 typedef struct packet_quest_info
 {
@@ -2615,9 +2620,10 @@ typedef struct packet_quest_confirm
 typedef struct packet_sync_position_element
 {
 	uint32_t dwVID;
-	long lX;
-	long lY;
+	int32_t lX;
+	int32_t lY;
 } TPacketGCSyncPositionElement;
+static_assert(sizeof(TPacketGCSyncPositionElement) == 12, "TPacketGCSyncPositionElement wire size changed");
 
 // location sync
 typedef struct packet_sync_position // variable packets
