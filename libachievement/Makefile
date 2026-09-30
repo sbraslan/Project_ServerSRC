@@ -5,7 +5,7 @@ INCLUDE = .
 
 GCC_VERSION = $(shell $(CC) --version 2>&1 | grep "(GCC)" | cut -d' ' -f3  | cut -d'.' -f1)
 
-CFLAGS  = -m32 -Wall -O2 -pipe -g -I$(INCLUDE) -I../Extern/include
+CFLAGS  = -m64 -Wall -O2 -pipe -g -I$(INCLUDE) -I../Extern/include
 CFLAGS += -std=c++20
 
 LIBS =
