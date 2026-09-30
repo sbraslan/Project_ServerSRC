@@ -637,7 +637,7 @@ typedef struct SPacketGGLogin
 	char szName[CHARACTER_NAME_MAX_LEN + 1];
 	uint32_t dwPID;
 	uint8_t bEmpire;
-	long lMapIndex;
+	int32_t lMapIndex;
 	uint8_t bChannel;
 #ifdef ENABLE_MULTI_LANGUAGE_SYSTEM
 	uint8_t bLanguage;
@@ -654,20 +654,20 @@ typedef struct SPacketGGRelay
 {
 	uint8_t bHeader;
 	char szName[CHARACTER_NAME_MAX_LEN + 1];
-	long lSize;
+	int32_t lSize;
 } TPacketGGRelay;
 
 typedef struct SPacketGGNotice
 {
 	uint8_t bHeader;
-	long lSize;
+	int32_t lSize;
 } TPacketGGNotice;
 
 typedef struct SPacketGGMonarchNotice
 {
 	uint8_t bHeader;
 	uint8_t bEmpire;
-	long lSize;
+	int32_t lSize;
 } TPacketGGMonarchNotice;
 
 typedef struct SPacketGGShutdown
@@ -734,7 +734,7 @@ typedef struct SPacketGGXmasWarpSanta
 {
 	uint8_t bHeader;
 	uint8_t bChannel;
-	long lMapIndex;
+	int32_t lMapIndex;
 } TPacketGGXmasWarpSanta;
 
 typedef struct SPacketGGXmasWarpSantaReply
@@ -768,8 +768,8 @@ typedef struct SPacketGGWarpCharacter
 {
 	uint8_t header;
 	uint32_t pid;
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 #ifdef ENABLE_CMD_WARP_IN_DUNGEON
 	int mapIndex;
 #endif
@@ -780,14 +780,14 @@ typedef struct SPacketGGGuildWarMapIndex
 	uint8_t bHeader;
 	uint32_t dwGuildID1;
 	uint32_t dwGuildID2;
-	long lMapIndex;
+	int32_t lMapIndex;
 } TPacketGGGuildWarMapIndex;
 
 typedef struct SPacketGGTransfer
 {
 	uint8_t bHeader;
 	char szName[CHARACTER_NAME_MAX_LEN + 1];
-	long lX, lY;
+	int32_t lX, lY;
 } TPacketGGTransfer;
 
 typedef struct SPacketGGLoginPing
@@ -800,7 +800,7 @@ typedef struct SPacketGGBlockChat
 {
 	uint8_t bHeader;
 	char szName[CHARACTER_NAME_MAX_LEN + 1];
-	long lBlockDuration;
+	int32_t lBlockDuration;
 } TPacketGGBlockChat;
 
 #ifdef ENABLE_RANKING_SYSTEM
@@ -815,7 +815,7 @@ typedef struct SPacketGGLoadRanking
 typedef struct SPacketGGCommand
 {
 	uint8_t bHeader;
-	long lSize;
+	int32_t lSize;
 } TPacketGGCommand;
 #endif
 
@@ -825,7 +825,7 @@ typedef struct SPacketGGShopStartOffline
 	uint8_t bHeader;
 	uint32_t dwPID;
 	uint8_t bEmpire;
-	long lMapIndex;
+	int32_t lMapIndex;
 	uint8_t bChannel;
 } TPacketGGShopStartOffline;
 
@@ -847,14 +847,14 @@ typedef struct SPacketGGMonarchTransfer
 {
 	uint8_t bHeader;
 	uint32_t dwTargetPID;
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 } TPacketMonarchGGTransfer;
 
 typedef struct SPacketGGBigNotice
 {
 	uint8_t bHeader;
-	long lSize;
+	int32_t lSize;
 } TPacketGGBigNotice;
 
 typedef struct SPacketGGCheckAwakeness
@@ -931,8 +931,8 @@ typedef struct SPacketGGSendWorldBossStates
 {
 	uint8_t	bHeader;
 	uint8_t	WBState;
-	long long WBTimer;
-	long long WBCooldown;
+	int64_t WBTimer;
+	int64_t WBCooldown;
 } TPacketGGSendWorldBossStates;
 #endif
 
@@ -1639,8 +1639,8 @@ typedef struct party_parameter
 struct TPartyPosition
 {
 	uint32_t dwPID;
-	long lX;
-	long lY;
+	int32_t lX;
+	int32_t lY;
 	float fRot;
 };
 
@@ -1759,7 +1759,7 @@ typedef struct command_handshake
 	uint8_t bHeader;
 	uint32_t dwHandshake;
 	uint32_t dwTime;
-	long lDelta;
+	int32_t lDelta;
 } TPacketCGHandshake;
 
 typedef struct packet_handshake
@@ -1767,7 +1767,7 @@ typedef struct packet_handshake
 	uint8_t bHeader;
 	uint32_t dwHandshake;
 	uint32_t dwTime;
-	long lDelta;
+	int32_t lDelta;
 } TPacketGCHandshake;
 
 typedef struct packet_bindudp
@@ -1889,7 +1889,7 @@ typedef struct packet_char_additional_info
 	uint32_t dwArrow;
 #endif
 #ifdef ENABLE_GROUP_DAMAGE_WEAPON
-	long lGroupWeapon;
+	int32_t lGroupWeapon;
 #endif
 #ifdef ENABLE_SKILL_COLOR_SYSTEM
 	uint32_t dwSkillColor[ESkillColorLength::MAX_SKILL_COUNT + ESkillColorLength::MAX_BUFF_COUNT][ESkillColorLength::MAX_EFFECT_COUNT];
@@ -1912,9 +1912,9 @@ typedef struct packet_add_char
 #endif
 
 	float angle;
-	long x;
-	long y;
-	long z;
+	int32_t x;
+	int32_t y;
+	int32_t z;
 
 	uint8_t bType;
 	uint16_t wRaceNum;
@@ -1961,7 +1961,7 @@ typedef struct packet_update_char
 	uint32_t dwArrow;
 #endif
 #ifdef ENABLE_GROUP_DAMAGE_WEAPON
-	long lGroupWeapon;
+	int32_t lGroupWeapon;
 #endif
 #ifdef ENABLE_SKILL_COLOR_SYSTEM
 	uint32_t dwSkillColor[ESkillColorLength::MAX_SKILL_COUNT + ESkillColorLength::MAX_BUFF_COUNT][ESkillColorLength::MAX_EFFECT_COUNT];
@@ -2021,7 +2021,7 @@ typedef struct packet_dead
 	uint32_t vid;
 #if defined (ENABLE_BATTLE_FIELD) && defined(ENABLE_BATTLE_FIELD)
 	bool bRestart;
-	long lMapIdx;
+	int32_t lMapIdx;
 #endif
 } TPacketGCDead;
 
@@ -2032,7 +2032,7 @@ typedef struct packet_main_character
 	uint32_t dwVID;
 	uint16_t wRaceNum;
 	char szName[CHARACTER_NAME_MAX_LEN + 1];
-	long lx, ly, lz;
+	int32_t lx, ly, lz;
 	uint8_t empire;
 	uint8_t skill_group;
 } TPacketGCMainCharacter;
@@ -2049,7 +2049,7 @@ typedef struct packet_main_character3_bgm
 	uint16_t wRaceNum;
 	char szChrName[CHARACTER_NAME_MAX_LEN + 1];
 	char szBGMName[MUSIC_NAME_LEN + 1];
-	long lx, ly, lz;
+	int32_t lx, ly, lz;
 	uint8_t empire;
 	uint8_t skill_group;
 } TPacketGCMainCharacter3_BGM;
@@ -2067,7 +2067,7 @@ typedef struct packet_main_character4_bgm_vol
 	char szChrName[CHARACTER_NAME_MAX_LEN + 1];
 	char szBGMName[MUSIC_NAME_LEN + 1];
 	float fBGMVol;
-	long lx, ly, lz;
+	int32_t lx, ly, lz;
 	uint8_t empire;
 	uint8_t skill_group;
 } TPacketGCMainCharacter4_BGM_VOL;
@@ -2076,7 +2076,7 @@ typedef struct packet_main_character4_bgm_vol
 typedef struct packet_points
 {
 	uint8_t header;
-	long points[POINT_MAX_NUM];
+	int32_t points[POINT_MAX_NUM];
 } TPacketGCPoints;
 
 typedef struct packet_point_change
@@ -2084,8 +2084,8 @@ typedef struct packet_point_change
 	int header;
 	uint32_t dwVID;
 	uint16_t type; //@fixme532
-	long amount; // changed value
-	long value; // current value
+	int32_t amount; // changed value
+	int32_t value; // current value
 } TPacketGCPointChange;
 
 typedef struct packet_motion
@@ -2103,7 +2103,7 @@ typedef struct SPacketGCItemDelDeprecated
 	uint32_t vnum;
 	uint8_t count;
 #ifdef ENABLE_SEALBIND_SYSTEM
-	long nSealDate;
+	int32_t nSealDate;
 #endif
 #ifdef ENABLE_CHANGE_LOOK_SYSTEM
 	uint32_t dwTransmutationVnum;
@@ -2120,7 +2120,7 @@ typedef struct SPacketGCItemDelDeprecated
 #ifdef ENABLE_SET_ITEM
 	uint8_t set_value;
 #endif
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -2138,7 +2138,7 @@ typedef struct packet_item_set
 	uint32_t anti_flags; // add flag
 	bool highlight;
 #ifdef ENABLE_SEALBIND_SYSTEM
-	long nSealDate;
+	int32_t nSealDate;
 #endif
 #ifdef ENABLE_CHANGE_LOOK_SYSTEM
 	uint32_t dwTransmutationVnum;
@@ -2155,7 +2155,7 @@ typedef struct packet_item_set
 #ifdef ENABLE_SET_ITEM
 	uint8_t set_value;
 #endif
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -2184,7 +2184,7 @@ typedef struct packet_item_update
 	TItemPos Cell;
 	uint8_t count;
 #ifdef ENABLE_SEALBIND_SYSTEM
-	long nSealDate;
+	int32_t nSealDate;
 #endif
 #ifdef ENABLE_CHANGE_LOOK_SYSTEM
 	uint32_t dwTransmutationVnum;
@@ -2201,7 +2201,7 @@ typedef struct packet_item_update
 #ifdef ENABLE_SET_ITEM
 	uint8_t set_value;
 #endif
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -2220,14 +2220,14 @@ typedef struct packet_item_ground_add
 #endif
 
 	uint8_t bHeader;
-	long x;
-	long y;
-	long z;
+	int32_t x;
+	int32_t y;
+	int32_t z;
 
 	uint32_t dwVID;
 	uint32_t dwVnum;
 #ifdef ENABLE_EXTENDED_ITEMNAME_ON_GROUND
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttrs[ITEM_ATTRIBUTE_MAX_NUM];
 #endif
 } TPacketGCItemGroundAdd;
@@ -2334,7 +2334,7 @@ struct packet_shop_item
 	uint8_t limit_level;
 #endif
 	uint8_t display_pos;
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -2376,7 +2376,7 @@ typedef struct packet_shop_set
 # ifdef ENABLE_CHEQUE_SYSTEM
 	uint32_t cheque;
 # endif
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 # ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -2462,7 +2462,7 @@ typedef struct packet_exchange
 #ifdef ENABLE_CHEQUE_SYSTEM
 	uint32_t cheque;
 #endif
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -2521,7 +2521,7 @@ typedef struct packet_script
 struct TargetAffectInfo
 {
 	uint32_t dwAffectNum;
-	long lDuration;
+	int32_t lDuration;
 };
 #endif
 
@@ -2612,7 +2612,7 @@ typedef struct packet_quest_confirm
 {
 	uint8_t header;
 	char msg[64 + 1];
-	long timeout;
+	int32_t timeout;
 	uint32_t requestPID;
 } TPacketGCQuestConfirm;
 
@@ -2680,9 +2680,9 @@ typedef struct packet_pvp
 typedef struct packet_warp
 {
 	uint8_t bHeader;
-	long lX;
-	long lY;
-	long lAddr;
+	int32_t lX;
+	int32_t lY;
+	int32_t lAddr;
 	uint16_t wPort;
 } TPacketGCWarp;
 
@@ -2757,8 +2757,8 @@ typedef struct packet_dungeon
 
 typedef struct packet_dungeon_dest_position
 {
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 } TPacketGCDungeonDestPosition;
 
 // Private Shop
@@ -2824,8 +2824,8 @@ typedef struct SPacketGCSpecialZodiacEffect
 	uint8_t type;
 	uint8_t type2;
 	uint32_t vid;
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 } TPacketGCSpecialZodiacEffect;
 #endif
 
@@ -2844,8 +2844,8 @@ typedef struct TNPCPosition
 	uint8_t bType;
 	char name[CHARACTER_NAME_MAX_LEN + 1];
 	uint32_t dwMobVnum;
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 } TShopPosition;
 #else
 typedef struct SPacketGCNPCPosition
@@ -2861,8 +2861,8 @@ struct TNPCPosition
 {
 	uint8_t bType;
 	char name[CHARACTER_NAME_MAX_LEN + 1];
-	long x;
-	long y;
+	int32_t x;
+	int32_t y;
 };
 #endif
 
@@ -2890,7 +2890,7 @@ typedef struct SEquipmentItemSet
 {
 	uint32_t vnum;
 	uint8_t count;
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_CHANGE_LOOK_SYSTEM
 	uint32_t dwTransmutationVnum;
@@ -2911,8 +2911,8 @@ typedef struct packet_view_equip // pakcet_view_equip
 typedef struct
 {
 	uint32_t dwID;
-	long x, y;
-	long width, height;
+	int32_t x, y;
+	int32_t width, height;
 	uint32_t dwGuildID;
 } TLandPacketElement;
 
@@ -2925,7 +2925,7 @@ typedef struct packet_land_list
 typedef struct
 {
 	uint8_t bHeader;
-	long lID;
+	int32_t lID;
 	char szName[32 + 1];
 	uint32_t dwVID;
 	uint8_t bType;
@@ -2934,24 +2934,24 @@ typedef struct
 typedef struct
 {
 	uint8_t bHeader;
-	long lID;
-	long lX, lY;
+	int32_t lID;
+	int32_t lX, lY;
 } TPacketGCTargetUpdate;
 
 typedef struct
 {
 	uint8_t bHeader;
-	long lID;
+	int32_t lID;
 } TPacketGCTargetDelete;
 
 typedef struct SPacketGCAffectElement
 {
 	uint32_t dwType;
 	uint16_t wApplyOn; //@fixme532
-	long lApplyValue;
+	int32_t lApplyValue;
 	uint32_t dwFlag;
-	long lDuration;
-	long lSPCost;
+	int32_t lDuration;
+	int32_t lSPCost;
 } TPacketGCAffectElement;
 
 typedef struct SPacketGCAffectAdd
@@ -3179,7 +3179,7 @@ typedef struct SPacketGCSeal
 	uint8_t header;
 	TItemPos pos;
 	uint8_t action;
-	long nSealDate;
+	int32_t nSealDate;
 } TPacketGCSeal;
 #endif
 
@@ -3543,7 +3543,7 @@ struct TSwitchbotUpdateItem
 	uint8_t slot;
 	uint8_t vnum;
 	uint8_t count;
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 # ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -3572,7 +3572,7 @@ typedef struct SBattleRankingMember
 	uint8_t bCategory;
 	char szName[CHARACTER_NAME_MAX_LEN + 1];
 	uint8_t bEmpire;
-	long lScore;
+	int32_t lScore;
 } TBattleRankingMember;
 
 typedef struct SPacketGCBattleInfo
@@ -3641,7 +3641,7 @@ typedef struct SItemData
 	uint32_t flags;
 	uint32_t anti_flags;
 #ifdef ENABLE_SEALBIND_SYSTEM
-	long nSealDate;
+	int32_t nSealDate;
 #endif
 #ifdef ENABLE_CHANGE_LOOK_SYSTEM
 	uint32_t dwTransmutationVnum;
@@ -3658,7 +3658,7 @@ typedef struct SItemData
 #ifdef ENABLE_SET_ITEM
 	uint8_t set_value;
 #endif
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -4385,8 +4385,8 @@ typedef struct SPacketGCDungeonInfo
 	uint16_t byIndex;
 	uint16_t byType;
 	bool bReset;
-	long lMapIndex;
-	long lEntryMapIndex;
+	int32_t lMapIndex;
+	int32_t lEntryMapIndex;
 	uint32_t dwBossVnum;
 	LevelLimit sLevelLimit;
 	Item sRequiredItem[EDungeonInfoData::MAX_REQUIRED_ITEMS];
@@ -4453,7 +4453,7 @@ typedef struct SPacketGCBiologManagerInfo
 	bool iCooldownReminder;
 	uint8_t bChance;
 	uint16_t wApplyType[MAX_BONUSES_LENGTH]; //@fixme532
-	long lApplyValue[MAX_BONUSES_LENGTH];
+	int32_t lApplyValue[MAX_BONUSES_LENGTH];
 	uint32_t dRewardItem;
 	uint16_t wRewardItemCount;
 	bool bSubMission;
@@ -4564,7 +4564,7 @@ typedef struct SPacketCGSendLottoNewTicket
 typedef struct SPacketCGSendLottoPickMoney
 {
 	uint8_t header;
-	long long amount;
+	int64_t amount;
 } TPacketCGSendLottoPickMoney;
 
 typedef struct SPacketGCLotteryOpenings
@@ -4582,8 +4582,8 @@ typedef struct SPacketGCReciveLottoBaseInfo
 	int num2;
 	int num3;
 	int num4;
-	long long jackpot;
-	long long nextRefresh;
+	int64_t jackpot;
+	int64_t nextRefresh;
 } TPacketGCReciveLottoBaseInfo;
 
 typedef struct SPacketGCReciveLottoTicketInfo
@@ -4599,7 +4599,7 @@ typedef struct SPacketGCReciveLottoTicketInfo
 	char buytime[24 + 1];
 	int state;
 	int winNumbers;
-	long long MoneyWin;
+	int64_t MoneyWin;
 } TPacketGCReciveLottoTicketInfo;
 
 typedef struct SPacketGCSendRankingJackpotInfo
@@ -4607,7 +4607,7 @@ typedef struct SPacketGCSendRankingJackpotInfo
 	uint8_t header;
 	char playername[24 + 1];
 	int lottoID;
-	long long money;
+	int64_t money;
 	char date[24 + 1];
 } TPacketGCSendRankingJackpotInfo;
 
@@ -4617,7 +4617,7 @@ typedef struct SPacketGCSendRankingMoneyInfo
 	char playername[24 + 1];
 	int level;
 	int empire;
-	long long money;
+	int64_t money;
 } TPacketGCSendRankingMoneyInfo;
 #endif
 
@@ -4666,8 +4666,8 @@ typedef struct SPacketEventData
 {
 	uint32_t dwID;
 	uint8_t bType;
-	long startTime;
-	long endTime;
+	int32_t startTime;
+	int32_t endTime;
 	uint32_t dwVnum;
 	int iPercent;
 	int iDropType;
