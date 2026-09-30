@@ -109,7 +109,7 @@ EXTRA_LIBS= -lm
 # WARN because it disables POSIX features used in the libraries.
 #
 CC= gcc10
-WARN= -m32 -Wall
+WARN= -m64 -Wall
 
 # ------------------------------------------------------------------ C options
 
