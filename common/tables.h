@@ -8,7 +8,7 @@
 typedef uint32_t IDENT;
 
 /**
-* @version 05/06/10 Bang2ni - Myshop Pricelist °ü·Ã ÆÐÅ¶ HEADER_XX_MYSHOP_PRICELIST_XXX Ãß°¡
+* @version 05/06/10 Bang2ni - Myshop Pricelist Â°Ã¼Â·Ãƒ Ã†ÃÃ…Â¶ HEADER_XX_MYSHOP_PRICELIST_XXX ÃƒÃŸÂ°Â¡
 */
 enum
 {
@@ -366,8 +366,8 @@ typedef struct SSimplePlayer
 	uint32_t dwLastPlayTime;
 #endif
 	uint8_t bDummy[4];
-	long x, y;
-	long lAddr;
+	int32_t x, y;
+	int32_t lAddr;
 	uint16_t wPort;
 	uint8_t skill_group;
 } TSimplePlayer;
@@ -411,7 +411,7 @@ typedef struct TPlayerItemApplyRandom
 
 typedef struct SSungmaTable
 {
-	long lMapIdx;
+	int32_t lMapIdx;
 	uint8_t bSungmaStr;
 	uint8_t bSungmaHp;
 	uint8_t bSungmaMove;
@@ -463,9 +463,9 @@ typedef struct SPlayerItem
 	uint32_t count;
 	uint32_t vnum;
 #ifdef ENABLE_SEALBIND_SYSTEM
-	long nSealDate;
+	int32_t nSealDate;
 #endif
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -578,8 +578,8 @@ typedef struct SPlayerTable
 	uint8_t dir;
 	INT x, y, z;
 	INT lMapIndex;
-	long lExitX, lExitY;
-	long lExitMapIndex;
+	int32_t lExitX, lExitY;
+	int32_t lExitMapIndex;
 
 	// @fixme301
 	int hp;
@@ -601,7 +601,7 @@ typedef struct SPlayerTable
 	uint32_t parts[PART_MAX_NUM]; //@fixme479 - uint16_t -> uint32_t
 	int16_t stamina;
 	uint8_t skill_group;
-	long lAlignment;
+	int32_t lAlignment;
 	char szMobile[MOBILE_MAX_LEN + 1];
 	int16_t stat_reset_count;
 	THorseInfo horse;
@@ -635,7 +635,7 @@ typedef struct SPlayerTable
 	uint8_t m_BiologActualMission;
 	uint16_t m_BiologCollectedItems;
 	uint8_t m_BiologCooldownReminder;
-	long m_BiologCooldown;
+	int32_t m_BiologCooldown;
 #endif
 #ifdef ENABLE_EXTEND_INVEN_ITEM_UPGRADE
 	int inventory_stage;
@@ -665,8 +665,8 @@ typedef struct SPlayerTable
 	uint8_t unlock_page_equipment;
 #endif
 #ifdef ENABLE_WORLD_LOTTERY_SYSTEM
-	long long lotto_moneypool;
-	long long lotto_totalmoneywin;
+	int64_t lotto_moneypool;
+	int64_t lotto_totalmoneywin;
 #endif
 } TPlayerTable;
 
@@ -813,7 +813,7 @@ typedef struct SSkillTable
 	uint32_t preSkillVnum;
 	uint8_t preSkillLevel;
 
-	long lMaxHit;
+	int32_t lMaxHit;
 	char szSplashAroundDamageAdjustPoly[100 + 1];
 
 	uint8_t bSkillAttrType;
@@ -917,9 +917,9 @@ typedef struct SPlayerShopTable
 	uint32_t empire;
 	uint32_t guild;
 # endif
-	long x;
-	long y;
-	long mapIndex;
+	int32_t x;
+	int32_t y;
+	int32_t mapIndex;
 	int channel;
 	uint32_t openTime;
 	bool closed;
@@ -979,19 +979,19 @@ typedef struct SQuestTable
 	uint32_t dwPID;
 	char szName[QUEST_NAME_MAX_LEN + 1];
 	char szState[QUEST_STATE_MAX_LEN + 1];
-	long lValue;
+	int32_t lValue;
 } TQuestTable;
 
 typedef struct SItemLimit
 {
 	uint8_t bType;
-	long lValue;
+	int32_t lValue;
 } TItemLimit;
 
 typedef struct SItemApply
 {
 	uint16_t wType; //@fixme532
-	long lValue;
+	int32_t lValue;
 } TItemApply;
 
 typedef struct SItemTable : public SEntityTable
@@ -1020,8 +1020,8 @@ typedef struct SItemTable : public SEntityTable
 
 	TItemLimit aLimits[ITEM_LIMIT_MAX_NUM];
 	TItemApply aApplies[ITEM_APPLY_MAX_NUM];
-	long alValues[ITEM_VALUES_MAX_NUM];
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alValues[ITEM_VALUES_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 
 #ifdef ENABLE_PROTO_RENEWAL
 	uint32_t dwRefineElementApplyType;
@@ -1066,7 +1066,7 @@ struct TItemAttrTable
 	char szApply[APPLY_NAME_MAX_LEN + 1];
 	uint32_t dwApplyIndex;
 	uint32_t dwProb;
-	long lValues[ITEM_ATTRIBUTE_MAX_LEVEL];
+	int32_t lValues[ITEM_ATTRIBUTE_MAX_LEVEL];
 	uint8_t bMaxLevelBySet[ATTRIBUTE_SET_MAX_NUM];
 };
 
@@ -1169,13 +1169,13 @@ typedef struct SSafeboxChangePasswordPacketAnswer
 typedef struct SMoveChannel
 {
 	uint8_t bChannel;
-	long lMapIndex;
+	int32_t lMapIndex;
 } TMoveChannel;
 
 typedef struct SRespondMoveChannel
 {
 	uint16_t wPort;
-	long lAddr;
+	int32_t lAddr;
 } TRespondMoveChannel;
 #endif
 
@@ -1191,7 +1191,7 @@ typedef struct SPacketGDSetup
 	uint8_t bChannel;
 	uint16_t wListenPort;
 	uint16_t wP2PPort;
-	long alMaps[MAP_ALLOW_LIMIT];
+	int32_t alMaps[MAP_ALLOW_LIMIT];
 	uint32_t dwLoginCount;
 	uint8_t bAuthServer;
 } TPacketGDSetup;
@@ -1203,7 +1203,7 @@ typedef struct SPacketDGMapLocations
 
 typedef struct SMapLocation
 {
-	long alMaps[MAP_ALLOW_LIMIT];
+	int32_t alMaps[MAP_ALLOW_LIMIT];
 	char szHost[MAX_HOST_LENGTH + 1];
 	uint16_t wPort;
 } TMapLocation;
@@ -1268,10 +1268,10 @@ typedef struct SPacketGDAffectElement
 {
 	uint32_t dwType;
 	uint16_t wApplyOn; //@fixme532
-	long lApplyValue;
+	int32_t lApplyValue;
 	uint32_t dwFlag;
-	long lDuration;
-	long lSPCost;
+	int32_t lDuration;
+	int32_t lSPCost;
 #ifdef ENABLE_AFFECT_RENEWAL
 	uint32_t dwExpireTime;
 #endif
@@ -1293,7 +1293,7 @@ typedef struct SPacketGDRemoveAffect
 typedef struct SPacketGDHighscore
 {
 	uint32_t dwPID;
-	long lValue;
+	int32_t lValue;
 	char cDir;
 	char szBoard[21];
 } TPacketGDHighscore;
@@ -1385,16 +1385,16 @@ typedef struct SPacketGuildWar
 #endif
 	uint32_t dwGuildFrom;
 	uint32_t dwGuildTo;
-	long lWarPrice;
-	long lInitialScore;
+	int32_t lWarPrice;
+	int32_t lInitialScore;
 } TPacketGuildWar;
 
 typedef struct SPacketGuildWarScore
 {
 	uint32_t dwGuildGainPoint;
 	uint32_t dwGuildOpponent;
-	long lScore;
-	long lBetScore;
+	int32_t lScore;
+	int32_t lBetScore;
 } TPacketGuildWarScore;
 
 typedef struct SRefineMaterial
@@ -1434,21 +1434,21 @@ typedef struct SPacketDGChangeName
 typedef struct SPacketGuildLadder
 {
 	uint32_t dwGuild;
-	long lLadderPoint;
-	long lWin;
-	long lDraw;
-	long lLoss;
+	int32_t lLadderPoint;
+	int32_t lWin;
+	int32_t lDraw;
+	int32_t lLoss;
 #ifdef ENABLE_GUILD_WAR_SCORE
-	long lWinNew[3];
-	long lDrawNew[3];
-	long lLossNew[3];
+	int32_t lWinNew[3];
+	int32_t lDrawNew[3];
+	int32_t lLossNew[3];
 #endif
 } TPacketGuildLadder;
 
 typedef struct SPacketGuildLadderPoint
 {
 	uint32_t dwGuild;
-	long lChange;
+	int32_t lChange;
 } TPacketGuildLadderPoint;
 
 typedef struct SPacketGDSMS
@@ -1601,7 +1601,7 @@ typedef struct SPacketGDGuildMoneyWithdrawGiveReply
 typedef struct SPacketSetEventFlag
 {
 	char szFlagName[EVENT_FLAG_NAME_MAX_LEN + 1];
-	long lValue;
+	int32_t lValue;
 } TPacketSetEventFlag;
 
 typedef struct SPacketLoginOnSetup
@@ -1646,14 +1646,14 @@ typedef struct SGuildReserve
 	uint8_t bPoints;
 	uint8_t bTime;
 #endif
-	long lWarPrice;
-	long lInitialScore;
+	int32_t lWarPrice;
+	int32_t lInitialScore;
 	bool bStarted;
 	uint32_t dwBetFrom;
 	uint32_t dwBetTo;
-	long lPowerFrom;
-	long lPowerTo;
-	long lHandicap;
+	int32_t lPowerFrom;
+	int32_t lPowerTo;
+	int32_t lHandicap;
 } TGuildWarReserve;
 
 typedef struct
@@ -1752,7 +1752,7 @@ typedef struct SItemPriceListTable
 typedef struct
 {
 	char szName[CHARACTER_NAME_MAX_LEN + 1];
-	long lDuration;
+	int32_t lDuration;
 } TPacketBlockChat;
 
 //ADMIN_MANAGER
@@ -1953,7 +1953,7 @@ struct TSwitchbottAttributeTable
 {
 	uint8_t attribute_set;
 	int apply_num;
-	long max_value;
+	int32_t max_value;
 };
 #endif
 
@@ -1962,14 +1962,14 @@ typedef struct SPacketGDGuildDungeon
 {
 	uint32_t dwGuildID;
 	uint8_t bChannel;
-	long lMapIndex;
+	int32_t lMapIndex;
 } TPacketGDGuildDungeon;
 
 typedef struct SPacketDGGuildDungeon
 {
 	uint32_t dwGuildID;
 	uint8_t bChannel;
-	long lMapIndex;
+	int32_t lMapIndex;
 } TPacketDGGuildDungeon;
 
 typedef struct SPacketGDGuildDungeonCD
@@ -2073,7 +2073,7 @@ typedef struct packet_mailbox_add_data
 	int iWon;
 	uint32_t ItemVnum;
 	uint32_t ItemCount;
-	long alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
@@ -2197,8 +2197,8 @@ typedef struct SEventTable
 {
 	uint32_t dwID;
 	char szType[64];
-	long startTime;
-	long endTime;
+	int32_t startTime;
+	int32_t endTime;
 	uint32_t dwVnum;
 	int iPercent;
 	int iDropType;
@@ -2226,7 +2226,7 @@ typedef struct SBiologRewards
 	uint32_t dRewardItem;
 	uint16_t wRewardItemCount;
 	uint16_t wApplyType[MAX_BONUSES_LENGTH];	//@fixme532
-	long lApplyValue[MAX_BONUSES_LENGTH];
+	int32_t lApplyValue[MAX_BONUSES_LENGTH];
 } TBiologRewardsProto;
 #endif
 
