@@ -69,6 +69,7 @@ cryptopp-rebuild:
 	@echo "Rebuilding Crypto++ with GCC14 amd64"
 	@echo "--------------------------------------"
 	@rm -f Extern/lib/libcryptopp.a
+	@rm -f Extern/cryptopp/*.o
 	$(MAKE) -C Extern/cryptopp clean
 	$(MAKE) -C Extern/cryptopp libcryptopp.a
 
