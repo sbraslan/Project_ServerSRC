@@ -369,7 +369,7 @@ ACMD(do_get_wb_reward);
 
 struct command_info cmd_info[] =
 {
-	{ "!RESERVED!",	nullptr,			0,			POS_DEAD,	GM_IMPLEMENTOR	}, /* ¹İµå½Ã ÀÌ °ÍÀÌ Ã³À½ÀÌ¾î¾ß ÇÑ´Ù. */
+	{ "!RESERVED!",	nullptr,			0,			POS_DEAD,	GM_IMPLEMENTOR	}, /* ë°˜ë“œì‹œ ì´ ê²ƒì´ ì²˜ìŒì´ì–´ì•¼ í•œë‹¤. */
 	{ "who",		do_who,			0,			POS_DEAD,	GM_IMPLEMENTOR	},
 	{ "war",		do_war,			0,			POS_DEAD,	GM_PLAYER	},
 	{ "warp",		do_warp,		0,			POS_DEAD,	GM_LOW_WIZARD	},
@@ -397,7 +397,7 @@ struct command_info cmd_info[] =
 	
 
 	{ "mob",		do_mob,			0,			POS_DEAD,	GM_HIGH_WIZARD	},
-	{ "mob_ld",		do_mob_ld,			0,			POS_DEAD,	GM_HIGH_WIZARD	}, /* ¸÷ÀÇ À§Ä¡¿Í ¹æÇâÀ» ¼³Á¤ÇØ ¼ÒÈ¯ /mob_ld vnum x y dir */
+	{ "mob_ld",		do_mob_ld,			0,			POS_DEAD,	GM_HIGH_WIZARD	}, /* ëª¹ì˜ ìœ„ì¹˜ì™€ ë°©í–¥ì„ ì„¤ì •í•´ ì†Œí™˜ /mob_ld vnum x y dir */
 	{ "ma",		do_mob_aggresive,	0,			POS_DEAD,	GM_HIGH_WIZARD	},
 	{ "mc",		do_mob_coward,		0,			POS_DEAD,	GM_HIGH_WIZARD	},
 	{ "mm",		do_mob_map,		0,			POS_DEAD,	GM_HIGH_WIZARD	},
@@ -502,8 +502,8 @@ struct command_info cmd_info[] =
 	{ "delqf",		do_delqf,		0,			POS_DEAD,	GM_LOW_WIZARD	},
 	{ "set_state",	do_set_state,		0,			POS_DEAD,	GM_LOW_WIZARD	},
 
-//	{ "·Î±×¸¦º¸¿©Áà",	do_detaillog,		0,			POS_DEAD,	GM_LOW_WIZARD	},//@fixme105
-//	{ "¸ó½ºÅÍº¸¿©Áà",	do_monsterlog,		0,			POS_DEAD,	GM_LOW_WIZARD	},//@fixme105
+//	{ "ë¡œê·¸ë¥¼ë³´ì—¬ì¤˜",	do_detaillog,		0,			POS_DEAD,	GM_LOW_WIZARD	},//@fixme105
+//	{ "ëª¬ìŠ¤í„°ë³´ì—¬ì¤˜",	do_monsterlog,		0,			POS_DEAD,	GM_LOW_WIZARD	},//@fixme105
 
 	{ "detaillog",	do_detaillog,		0,			POS_DEAD,	GM_LOW_WIZARD	},
 	{ "monsterlog",	do_monsterlog,		0,			POS_DEAD,	GM_LOW_WIZARD	},
@@ -655,7 +655,7 @@ struct command_info cmd_info[] =
 	{ "get_mob_count",		do_get_mob_count,		0,	POS_DEAD,	GM_LOW_WIZARD	},
 
 	{ "dice",				do_dice,				0,	POS_DEAD,	GM_PLAYER		},
-//	{ "ÁÖ»çÀ§",				do_dice,				0,	POS_DEAD,	GM_PLAYER		},//@fixme105
+//	{ "ì£¼ì‚¬ìœ„",				do_dice,				0,	POS_DEAD,	GM_PLAYER		},//@fixme105
 	{ "special_item",			do_special_item,	0,	POS_DEAD,	GM_IMPLEMENTOR		},
 
 	{ "click_mall",			do_click_mall,			0,	POS_DEAD,	GM_PLAYER		},
@@ -858,7 +858,7 @@ struct command_info cmd_info[] =
 	{ "get_wb_reward",	do_get_wb_reward,	0,			POS_DEAD,	GM_PLAYER },
 #endif
 
-	{ "\n",		nullptr,			0,			POS_DEAD,	GM_IMPLEMENTOR	}  /* ¹İµå½Ã ÀÌ °ÍÀÌ ¸¶Áö¸·ÀÌ¾î¾ß ÇÑ´Ù. */
+	{ "\n",		nullptr,			0,			POS_DEAD,	GM_IMPLEMENTOR	}  /* ë°˜ë“œì‹œ ì´ ê²ƒì´ ë§ˆì§€ë§‰ì´ì–´ì•¼ í•œë‹¤. */
 };
 
 void interpreter_set_privilege(const char *cmd, int lvl)
@@ -976,7 +976,7 @@ extern void interpret_command(LPCHARACTER ch, const char * argument, size_t len)
 				break;
 			
 			/*case POS_FIGHTING:
-				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("¸ñ¼ûÀ» °É°í ÀüÅõ Áß ÀÔ´Ï´Ù. ÁıÁß ÇÏ¼¼¿ä."));
+				ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("ëª©ìˆ¨ì„ ê±¸ê³  ì „íˆ¬ ì¤‘ ì…ë‹ˆë‹¤. ì§‘ì¤‘ í•˜ì„¸ìš”."));
 				break;*/
 
 			default:
@@ -987,8 +987,10 @@ extern void interpret_command(LPCHARACTER ch, const char * argument, size_t len)
 		return;
 	}
 
+#ifdef ENABLE_CSHIELD
 	if (std::strcmp(BlockedList(), cmd) == 0)
 		MonitorUser();
+#endif
 
 	if (*cmd_info[icmd].command == '\n')
 	{
