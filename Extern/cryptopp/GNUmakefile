@@ -728,7 +728,7 @@ DLLSRCS :=  cryptlib.cpp cpu.cpp integer.cpp 3way.cpp adler32.cpp algebra.cpp al
 # The repository contains source files from newer Crypto++ snapshots as well.
 # Keep the static server library on the coherent 7.0 source set already maintained
 # by DLLSRCS. ospstore.cpp is not present in this tree and is not needed on FreeBSD.
-LIBSRCS := $(filter-out ospstore.cpp,$(DLLSRCS))
+LIBSRCS := $(filter-out ospstore.cpp,$(DLLSRCS)) sse-simd.cpp
 LIBOBJS := $(LIBSRCS:.cpp=.o)
 
 DLLOBJS := $(DLLSRCS:.cpp=.export.o)
