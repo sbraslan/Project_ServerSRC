@@ -25,31 +25,28 @@ string trim(const string& str) { return trim_left(trim_right(str)); }
 
 static string* StringSplit(string strOrigin, string strTok)
 {
-	uint32_t cutAt; // Cutting position
-	int index = 0; // String index
-	string* strResult = new string[30]; // Variable to return
+	constexpr size_t kMaxSplitTokens = 32;
+	string::size_type cutAt = string::npos; // size_t on amd64; do not truncate npos
+	size_t index = 0;
+	string* strResult = new string[kMaxSplitTokens];
 
-	// Repeat until strTok is found
-	while ((cutAt = strOrigin.find_first_of(strTok)) != strOrigin.npos)
+	// Repeat until strTok is found or the fixed result buffer is full.
+	while (index < kMaxSplitTokens &&
+		(cutAt = strOrigin.find_first_of(strTok)) != string::npos)
 	{
-		if (cutAt > 0) // If the cutting position is greater than 0 (on success)
-		{
-			strResult[index++] = strOrigin.substr(0, cutAt); // Add to result array
-		}
-		strOrigin = strOrigin.substr(cutAt + 1); // The original is the rest except the cut
+		if (cutAt > 0)
+			strResult[index++] = strOrigin.substr(0, cutAt);
+
+		strOrigin = strOrigin.substr(cutAt + 1);
 	}
 
-	if (strOrigin.length() > 0) // If the original still remains
-	{
-		strResult[index++] = strOrigin.substr(0, cutAt); // Add the rest to the result array
-	}
+	if (!strOrigin.empty() && index < kMaxSplitTokens)
+		strResult[index++] = strOrigin;
 
-	for (int i = 0; i < index; i++)
-	{
+	for (size_t i = 0; i < index; ++i)
 		strResult[i] = trim(strResult[i]);
-	}
 
-	return strResult; // Return result
+	return strResult;
 }
 
 int get_Item_Type_Value(string inputString)
