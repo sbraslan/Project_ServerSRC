@@ -1,6 +1,8 @@
 /*----- atoi function -----*/
 #include "CommonDefines.h"
-#include <msl/utils.h>
+#include <cstdint>
+#include <cstdlib>
+#include <string>
 
 /*----- atoi function -----*/
 inline bool str_to_number(bool& out, const char* in) noexcept
