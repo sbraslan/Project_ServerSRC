@@ -1,4 +1,4 @@
-CXX	= g++10
+CXX	= g++14
 
 PLATFORM = $(shell file /bin/ls | cut -d' ' -f3 | cut -d'-' -f1)
 
