@@ -9253,7 +9253,7 @@ bool CHARACTER::WarpSet(long x, long y, long lPrivateMapIndex)
 	if (!IsPC())
 		return false;
 
-	long lAddr;
+	int32_t lAddr;
 	long lMapIndex;
 	uint16_t wPort;
 
@@ -9270,7 +9270,7 @@ bool CHARACTER::WarpSet(long x, long y, long lPrivateMapIndex)
 
 	// Send Supplementary Data Block if new map requires security packages in loading this map
 	{
-		long lCurAddr = 0;
+		int32_t lCurAddr = 0;
 		long lCurMapIndex = 0;
 		uint16_t wCurPort;
 
