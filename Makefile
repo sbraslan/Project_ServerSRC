@@ -8,7 +8,7 @@ PLATFORM = $(shell file /bin/ls | cut -d' ' -f3 | cut -d'-' -f1)
 BSD_VERSION = $(shell uname -v 2>&1 | cut -d' ' -f2 | cut -d'.' -f1)
 SVR_VERSION = $(shell cat __REVISION__)
 
-.PHONY:  liblua libsql libgame libpoly libthecore libachievement game db game-fast db-fast fast cache-info
+.PHONY:  liblua libsql libgame libpoly libthecore libachievement game db game-fast db-fast fast cache-info cryptopp-rebuild
 
 default: liblua libsql libgame libpoly libthecore libachievement game db
 	@echo "--------------------------------------"
@@ -63,6 +63,14 @@ db: .
 	$(MAKE) -C $@/src clean
 	$(MAKE) -C $@/src
 	$(MAKE) -C $@/src symlink
+
+cryptopp-rebuild:
+	@echo "--------------------------------------"
+	@echo "Rebuilding Crypto++ with GCC14 amd64"
+	@echo "--------------------------------------"
+	@rm -f Extern/lib/libcryptopp.a
+	$(MAKE) -C Extern/cryptopp clean
+	$(MAKE) -C Extern/cryptopp libcryptopp.a
 
 # Fast development builds: keep existing object files and rebuild only what changed.
 game-fast:
