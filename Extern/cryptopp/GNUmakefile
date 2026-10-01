@@ -1,5 +1,8 @@
-CXX	= g++6
-CC = gcc6
+CCACHE ?= $(shell command -v ccache 2>/dev/null || command -v ccache4 2>/dev/null)
+CCACHE_PREFIX := $(if $(strip $(CCACHE)),$(CCACHE) ,)
+
+CXX	= $(CCACHE_PREFIX)g++14
+CC = $(CCACHE_PREFIX)gcc14
 ###########################################################
 #####        System Attributes and Programs           #####
 ###########################################################
@@ -128,7 +131,7 @@ ifeq ($(SUN_COMPILER),1)
     CXXFLAGS ?= -DNDEBUG -g -xO3
   endif
 else
-  CXXFLAGS ?= -DNDEBUG -g2 -O3
+  CXXFLAGS ?= -m64 -DNDEBUG -g2 -O3
 endif
 
 # Default prefix for make install
