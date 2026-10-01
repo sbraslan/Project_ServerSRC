@@ -1,6 +1,8 @@
 #ifndef __INC_METIN_II_GAME_ITEM_H__
 #define __INC_METIN_II_GAME_ITEM_H__
 
+#include <cstdint>
+
 #include "entity.h"
 
 class CItem : public CEntity
@@ -156,11 +158,11 @@ public:
 	void ModifyPoints(bool bAdd);
 
 	bool CreateSocket(uint8_t bSlot, uint8_t bGold);
-	const long* GetSockets() noexcept { return &m_alSockets[0]; }
-	long GetSocket(int i) noexcept { return m_alSockets[i]; }
+	const int32_t* GetSockets() noexcept { return &m_alSockets[0]; }
+	int32_t GetSocket(int i) noexcept { return m_alSockets[i]; }
 
-	void SetSockets(const long* al);
-	void SetSocket(int i, long v, bool bLog = true);
+	void SetSockets(const int32_t* al);
+	void SetSocket(int i, int32_t v, bool bLog = true);
 
 	int GetSocketCount();
 	bool AddSocket();
@@ -495,7 +497,7 @@ private:
 
 	bool m_bExchanging;
 
-	long m_alSockets[ITEM_SOCKET_MAX_NUM];
+	int32_t m_alSockets[ITEM_SOCKET_MAX_NUM];
 	TPlayerItemAttribute m_aAttr[ITEM_ATTRIBUTE_MAX_NUM];
 #ifdef ENABLE_YOHARA_SYSTEM
 	TPlayerItemApplyRandom m_aApplyRandom[APPLY_RANDOM_SLOT_MAX_NUM];
