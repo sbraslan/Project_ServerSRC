@@ -49,7 +49,7 @@ libachievement: .
 	$(MAKE) -C $@ clean
 	$(MAKE) -C $@
 
-game: .
+game: liblua libsql libgame libpoly libthecore libachievement
 	@touch $@/src/Depend
 	$(MAKE) -C $@/src dep
 	$(MAKE) -C $@/src clean
@@ -57,7 +57,7 @@ game: .
 	$(MAKE) -C $@/src
 	$(MAKE) -C $@/src symlink
 
-db: .
+db: libsql libgame libpoly libthecore
 	@touch $@/src/Depend
 	$(MAKE) -C $@/src dep
 	$(MAKE) -C $@/src clean
