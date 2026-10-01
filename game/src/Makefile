@@ -321,6 +321,16 @@ endif
 MAIN_TARGET = $(BINDIR)/game_r$(GAME_VERSION)
 
 default: $(MAIN_TARGET)
+
+.PHONY: cache-info
+cache-info:
+ifneq ($(strip $(CCACHE)),)
+	@echo "ccache: $(CCACHE)"
+	@$(CCACHE) -s
+else
+	@echo "ccache not found"
+	@echo "Install on FreeBSD with: pkg install ccache4"
+endif
 test: $(TEST_TARGET)
 
 $(OBJDIR)/%.o: %.c
