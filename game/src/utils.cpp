@@ -34,7 +34,7 @@ std::string mysql_hash_password(const char* tmp_pwd)
 #ifdef WIN32
 	my_make_scrambled_password(hash_buf, tmp_pwd, strlen(tmp_pwd));
 #else
-	make_scrambled_password(hash_buf, tmp_pwd);
+	ma_make_scrambled_password(hash_buf, tmp_pwd);
 #endif
 	return hash_buf;
 }
