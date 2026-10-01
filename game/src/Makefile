@@ -9,10 +9,13 @@ GccMajorVersion := $(shell expr `$(CC) -dumpversion | cut -f1 -d.`)
 GccMinorVersion := $(shell expr `$(CC) -dumpversion | cut -f2 -d.`)
 GccMinorEGT8 := $(shell expr $(GccMinorVersion) \>= 8)
 
-INCDIR =
+INCDIR = -I../../Extern
 LIBDIR =
 BINDIR = ..
 OBJDIR = .obj
+
+CRYPTOPP_DIR = ../../Extern/cryptopp
+CRYPTOPP_LIB = ../../Extern/lib/libcryptopp.a
 $(shell if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi)
 
 ## LIST OF CONSTANTS BEGIN
@@ -63,8 +66,7 @@ LIBDIR += -L/usr/local/lib/mysql
 LIBS += -lmysqlclient -lz
 
 # Crypto++ (bundled source, rebuilt with GCC14 to match the game ABI)
-INCDIR += -I../../Extern
-LIBS += ../../Extern/lib/libcryptopp.a
+LIBS += $(CRYPTOPP_LIB)
 
 # Lua
 CFLAGS += -DENABLE_LUA_5_VERSION=ENABLE_LUA_5_VERSION
@@ -351,7 +353,13 @@ limit_time:
 	@echo update limit time
 	@python update_limit_time.py
 
-$(MAIN_TARGET): $(CPPOBJS) $(COBJS) $(MAINOBJ)
+$(CRYPTOPP_LIB):
+	@echo "Building bundled Crypto++ with GCC14 (amd64)"
+	@rm -f $(CRYPTOPP_LIB)
+	$(MAKE) -C $(CRYPTOPP_DIR) clean
+	$(MAKE) -C $(CRYPTOPP_DIR) libcryptopp.a
+
+$(MAIN_TARGET): $(CRYPTOPP_LIB) $(CPPOBJS) $(COBJS) $(MAINOBJ)
 	@echo -e "\033[0;31m [linking] \033[0m " $(MAIN_TARGET)
 #	@echo linking $(MAIN_TARGET)
 	@$(CC) $(CFLAGS) $(CXXFLAGS) $(LIBDIR) $(COBJS) $(CPPOBJS) $(MAINOBJ) $(LIBS) -o $(MAIN_TARGET)
