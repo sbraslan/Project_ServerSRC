@@ -7,14 +7,14 @@
 
 CMapLocation g_mapLocations;
 
-bool CMapLocation::Get(long x, long y, long & lIndex, long & lAddr, uint16_t & wPort)
+bool CMapLocation::Get(long x, long y, long & lIndex, int32_t & lAddr, uint16_t & wPort)
 {
 	lIndex = SECTREE_MANAGER::Instance().GetMapIndex(x, y);
 
 	return Get(lIndex, lAddr, wPort);
 }
 
-bool CMapLocation::Get(int iIndex, long & lAddr, uint16_t & wPort)
+bool CMapLocation::Get(int iIndex, int32_t & lAddr, uint16_t & wPort)
 {
 	if (iIndex == 0)
 	{
@@ -44,7 +44,7 @@ void CMapLocation::Insert(long lIndex, const char * c_pszHost, uint16_t wPort)
 {
 	TLocation loc;
 
-	loc.addr = inet_addr(c_pszHost);
+	loc.addr = static_cast<int32_t>(inet_addr(c_pszHost));
 	loc.port = wPort;
 
 	m_map_address.insert(std::make_pair(lIndex, loc));
