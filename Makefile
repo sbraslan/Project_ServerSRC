@@ -1,14 +1,11 @@
-CCACHE ?= $(shell command -v ccache 2>/dev/null || command -v ccache4 2>/dev/null)
-CCACHE_PREFIX := $(if $(strip $(CCACHE)),$(CCACHE) ,)
-
-CC=$(CCACHE_PREFIX)gcc10
-CXX=$(CCACHE_PREFIX)g++10
+CC=gcc10
+CXX=g++10
 
 PLATFORM = $(shell file /bin/ls | cut -d' ' -f3 | cut -d'-' -f1)
 BSD_VERSION = $(shell uname -v 2>&1 | cut -d' ' -f2 | cut -d'.' -f1)
 SVR_VERSION = $(shell cat __REVISION__)
 
-.PHONY:  liblua libsql libgame libpoly libthecore libachievement game db game-fast db-fast fast cache-info
+.PHONY:  liblua libsql libgame libpoly libthecore libachievement game db
 
 default: liblua libsql libgame libpoly libthecore libachievement game db
 	@echo "--------------------------------------"
@@ -63,29 +60,6 @@ db: .
 	$(MAKE) -C $@/src clean
 	$(MAKE) -C $@/src
 	$(MAKE) -C $@/src symlink
-
-# Fast development builds: keep existing object files and rebuild only what changed.
-game-fast:
-	$(MAKE) -C game/src
-	$(MAKE) -C game/src symlink
-
-db-fast:
-	$(MAKE) -C db/src
-	$(MAKE) -C db/src symlink
-
-fast: game-fast db-fast
-	@echo "--------------------------------------"
-	@echo "Fast incremental build done"
-	@echo "--------------------------------------"
-
-cache-info:
-ifneq ($(strip $(CCACHE)),)
-	@echo "ccache: $(CCACHE)"
-	@$(CCACHE) -s
-else
-	@echo "ccache not found"
-	@echo "Install on FreeBSD with: pkg install ccache4"
-endif
 
 ver:
 	@$(CC) -v
