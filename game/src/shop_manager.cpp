@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <algorithm>
 #include "../../libgame/include/grid.h"
 #include "constants.h"
 #include "utils.h"
@@ -836,7 +837,7 @@ bool ConvertToShopItemTable(IN CGroupNode* pNode, OUT TShopTableEx& shopTable)
 	CGrid grid = CGrid(5, 9);	//@infome000
 	int iPos;
 
-	msl::refill(shopTable.items);
+	std::fill_n(shopTable.items, sizeof(shopTable.items) / sizeof(shopTable.items[0]), TShopItemTable{});
 
 	for (size_t i = 0; i < shopItems.size(); i++)
 	{
