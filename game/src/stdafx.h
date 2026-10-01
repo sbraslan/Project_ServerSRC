@@ -33,7 +33,9 @@
 #include "typedef.h"
 #include "Locale.hpp"
 #include "event.h"
+#ifdef ENABLE_CSHIELD
 #include "../../../Extern/include/libprotect.h"
+#endif
 
 #define PASSES_PER_SEC(sec) ((sec) * passes_per_sec)
 
