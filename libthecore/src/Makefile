@@ -36,4 +36,4 @@ memcpy: memcpy.o utils.o log.o
 	$(CC) $(CFLAGS) -c -D__MAIN__ memcpy.c
 	$(CC) $(CFLAGS) -o memcpy memcpy.o utils.o log.o
 
-include Depend
+sinclude Depend
