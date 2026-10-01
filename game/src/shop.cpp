@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <algorithm>
 #include "../../libgame/include/grid.h"
 #include "constants.h"
 #include "utils.h"
@@ -286,7 +287,7 @@ void CShop::SetShopItems(TShopItemTable* pTable, uint8_t bItemCount)
 	m_itemVector.resize(SHOP_HOST_ITEM_MAX_NUM);
 #endif
 
-	msl::refill(m_itemVector);
+	std::fill(m_itemVector.begin(), m_itemVector.end(), SHOP_ITEM{});
 
 	for (int i = 0; i < bItemCount; ++i)
 	{
