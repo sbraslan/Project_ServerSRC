@@ -160,6 +160,7 @@ public:
 	long GetSocket(int i) noexcept { return m_alSockets[i]; }
 
 	void SetSockets(const long* al);
+	void SetSockets(const int32_t* al);
 	void SetSocket(int i, long v, bool bLog = true);
 
 	int GetSocketCount();
