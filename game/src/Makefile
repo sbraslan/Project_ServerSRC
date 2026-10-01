@@ -12,6 +12,7 @@ GccMinorEGT8 := $(shell expr $(GccMinorVersion) \>= 8)
 INCDIR = -I../../Extern
 LIBDIR =
 BINDIR = ..
+DEPLOYDIR ?= /usr/home/game/share/bin
 OBJDIR = .obj
 
 CRYPTOPP_DIR = ../../Extern/cryptopp
@@ -369,7 +370,9 @@ dump:
 	@$(CC) -dM -E - < /dev/null > .nope.nope
 
 symlink:
-	@ln -fs game_r$(GAME_VERSION) $(BINDIR)/game_symlink
+	@mkdir -p $(DEPLOYDIR)
+	@ln -fs $(abspath $(MAIN_TARGET)) $(DEPLOYDIR)/game
+	@echo "game -> $(abspath $(MAIN_TARGET))"
 
 strip:
 	@cp $(MAIN_TARGET) $(BINDIR)/game_r
