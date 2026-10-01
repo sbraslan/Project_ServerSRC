@@ -2261,6 +2261,14 @@ void CItem::SetSockets(const long* c_al)
 	Save();
 }
 
+void CItem::SetSockets(const int32_t* c_al)
+{
+	for (int i = 0; i < ITEM_SOCKET_MAX_NUM; ++i)
+		m_alSockets[i] = static_cast<long>(c_al[i]);
+
+	Save();
+}
+
 void CItem::SetSocket(int i, long v, bool bLog)
 {
 	assert(i < ITEM_SOCKET_MAX_NUM);
@@ -2310,7 +2318,7 @@ bool CItem::GetApplyRandomData(uint32_t vnum)	//need to be reworked, to use APPL
 
 	else if (vnum >= 360 && vnum <= 375)	//Schlangenwaffen
 		variable = 4;
-	else if ((vnum >= 21310 && vnum <= 21325) || (vnum >= 21330 && vnum <= 21345))	//SchlangenRüssis
+	else if ((vnum >= 21310 && vnum <= 21325) || (vnum >= 21330 && vnum <= 21345))	//SchlangenRÃ¼ssis
 		variable = 4;
 
 	return variable;
@@ -3143,7 +3151,7 @@ void CItem::SetAccessorySocketDownGradeTime(uint32_t time)
 	SetSocket(2, time);
 
 	if (test_server && GetOwner())
-		GetOwner()->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("%s¿¡¼­ ¼ÒÄÏ ºüÁú¶§±îÁö ³²Àº ½Ã°£ %d"), GetName(), time);
+		GetOwner()->ChatPacket(CHAT_TYPE_INFO, LC_TEXT("%sÂ¿Â¡Â¼Â­ Â¼Ã’Ã„Ã ÂºÃ¼ÃÃºÂ¶Â§Â±Ã®ÃÃ¶ Â³Â²Ã€Âº Â½ÃƒÂ°Â£ %d"), GetName(), time);
 }
 
 EVENTFUNC(accessory_socket_expire_event)
@@ -3828,10 +3836,10 @@ bool CItem::IsSealAble() const
 	if (GetType() == ITEM_DS)		// Drachensteine
 		return true;
 
-	if (GetType() == ITEM_COSTUME)	//Kostüme
+	if (GetType() == ITEM_COSTUME)	//KostÃ¼me
 		return true;
 
-	if (GetType() == ITEM_QUEST)	// Aufträge
+	if (GetType() == ITEM_QUEST)	// AuftrÃ¤ge
 		return true;
 
 	return GetType() == ITEM_ARMOR || GetType() == ITEM_BELT;
