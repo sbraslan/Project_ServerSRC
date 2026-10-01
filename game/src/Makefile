@@ -88,9 +88,6 @@ LIBDIR += -L/usr/local/lib
 LIBDIR += -L../../libthecore/lib -L../../libpoly -L../../libsql -L../../libgame/lib -L../../libachievement/lib
 LIBS += -lthecore -lpoly -lsql -lgame -lachievement
 
-LIBDIR += -L../../../Extern/lib
-LIBS += -lprotect
-
 # PROJECT_SRC_FILES BEGIN
 MAINCPP = main.cpp
 
