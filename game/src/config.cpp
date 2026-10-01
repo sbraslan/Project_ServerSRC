@@ -149,7 +149,7 @@ int SPEEDHACK_LIMIT_COUNT   = 50;
 int SPEEDHACK_LIMIT_BONUS   = 80;
 int g_iSyncHackLimitCount = 10;
 
-//½Ã¾ß = VIEW_RANGE + VIEW_BONUS_RANGE
+//ì‹œì•¼ = VIEW_RANGE + VIEW_BONUS_RANGE
 int VIEW_RANGE = 5000;
 int VIEW_BONUS_RANGE = 500;
 
@@ -184,8 +184,8 @@ int gShutdownAge = 0;
 int gShutdownEnable = 0;
 
 /*
- * NOTE : ÇÙ Ã¼Å© On/Off. CheckInÇÒ¶§ false·Î ¼öÁ¤ÇßÀ¸¸é ¹İµå½Ã È®ÀÎÇÏ°í °íÃÄ³õÀ»°Í!
- * ÀÌ°É·Î »ı±æ¼öÀÖ´Â ¶ËÀº Ã¥ÀÓ¾ÈÁü ~ ity ~
+ * NOTE : í•µ ì²´í¬ On/Off. CheckIní• ë•Œ falseë¡œ ìˆ˜ì •í–ˆìœ¼ë©´ ë°˜ë“œì‹œ í™•ì¸í•˜ê³  ê³ ì³ë†“ì„ê²ƒ!
+ * ì´ê±¸ë¡œ ìƒê¸¸ìˆ˜ìˆëŠ” ë˜¥ì€ ì±…ì„ì•ˆì§ ~ ity ~
  */
 bool gHackCheckEnable = false;
 
@@ -243,7 +243,7 @@ void map_allow_add(int index)
 	s_set_map_allows.insert(index);
 }
 
-void map_allow_copy(long * pl, int size)
+void map_allow_copy(int32_t * pl, int size)
 {
 	int iCount = 0;
 	std::set<int>::iterator it = s_set_map_allows.begin();
@@ -605,7 +605,7 @@ static bool __LoadConnectConfigFile(const char* configName)
 
 	AccountDB::Instance().ConnectAsync(db_host[1], mysql_db_port[1], db_user[1], db_pwd[1], db_db[1], g_stLocale.c_str());
 
-	// Player DB Á¢¼Ó
+	// Player DB ì ‘ì†
 	DBManager::Instance().Connect(db_host[0], mysql_db_port[0], db_user[0], db_pwd[0], db_db[0]);
 
 	if (!DBManager::Instance().IsConnected())
@@ -618,7 +618,7 @@ static bool __LoadConnectConfigFile(const char* configName)
 
 	if (false == g_bAuthServer)
 	{
-		// Log DB Á¢¼Ó
+		// Log DB ì ‘ì†
 		LogManager::Instance().Connect(log_host, log_port, log_user, log_pwd, log_db);
 
 		if (!LogManager::Instance().IsConnected())
