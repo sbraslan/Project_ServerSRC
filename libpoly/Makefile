@@ -1,4 +1,4 @@
-CXX	= g++10
+CXX	= g++14
 BIN = ./libpoly.a
 
 GCC_VERSION = $(shell $(CC) --version 2>&1 | grep "(GCC)" | cut -d' ' -f3  | cut -d'.' -f1)
