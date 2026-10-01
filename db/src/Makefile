@@ -49,9 +49,6 @@ INCDIR += -I../../../Extern/include
 LIBDIR += -L../../libthecore/lib -L../../libsql -L../../libpoly -L../../libgame/lib
 LIBS += -lthecore -lsql -lpoly -lgame -lm
 
-# OpenSSL
-LIBS += -lssl -lcrypto
-
 # PROJECT_SRC_FILES BEGIN
 CPPFILE = Config.cpp \
 		  NetBase.cpp \
