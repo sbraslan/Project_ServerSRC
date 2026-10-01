@@ -1,4 +1,4 @@
-CC	= g++10
+CC	= g++14
 BIN_DIR = ../lib
 BIN     = $(BIN_DIR)/libthecore.a
 INCLUDE = ../include
