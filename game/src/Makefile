@@ -62,13 +62,9 @@ INCDIR += -I/usr/local/include/mysql
 LIBDIR += -L/usr/local/lib/mysql
 LIBS += -lmysqlclient -lz
 
-# CryptoPP (native FreeBSD amd64 package)
-LIBS += -lcryptopp
-
-# OpenSSL
-INCDIR += -I/usr/include
-LIBS += -lssl -lcrypto
-# LIBS += /usr/lib/libssl.a
+# Crypto++ (bundled source, rebuilt with GCC14 to match the game ABI)
+INCDIR += -I../../Extern
+LIBS += ../../Extern/lib/libcryptopp.a
 
 # Lua
 CFLAGS += -DENABLE_LUA_5_VERSION=ENABLE_LUA_5_VERSION
