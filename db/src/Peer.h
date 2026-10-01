@@ -59,8 +59,8 @@ public:
 	void SetP2PPort(uint16_t wPort);
 	uint16_t GetP2PPort() { return m_wP2PPort; }
 
-	void SetMaps(long* pl);
-	long* GetMaps() { return &m_alMaps[0]; }
+	void SetMaps(const int32_t* pl);
+	int32_t* GetMaps() { return &m_alMaps[0]; }
 
 	bool SetItemIDRange(TItemIDRangeTable itemRange);
 	bool SetSpareItemIDRange(TItemIDRangeTable itemRange);
@@ -76,9 +76,9 @@ private:
 #endif
 	uint32_t m_dwHandle;
 	uint32_t m_dwUserCount;
-	uint16_t m_wListenPort; // °ÔÀÓ¼­¹ö°¡ Å¬¶óÀÌ¾ğÆ®¸¦ À§ÇØ listen ÇÏ´Â Æ÷Æ®
-	uint16_t m_wP2PPort; // °ÔÀÓ¼­¹ö°¡ °ÔÀÓ¼­¹ö P2P Á¢¼ÓÀ» À§ÇØ listen ÇÏ´Â Æ÷Æ®
-	long m_alMaps[MAP_ALLOW_LIMIT]; // ¾î¶² ¸ÊÀ» °üÀåÇÏ°í ÀÖ´Â°¡?
+	uint16_t m_wListenPort; // ê²Œì„ì„œë²„ê°€ í´ë¼ì´ì–¸íŠ¸ë¥¼ ìœ„í•´ listen í•˜ëŠ” í¬íŠ¸
+	uint16_t m_wP2PPort; // ê²Œì„ì„œë²„ê°€ ê²Œì„ì„œë²„ P2P ì ‘ì†ì„ ìœ„í•´ listen í•˜ëŠ” í¬íŠ¸
+	int32_t m_alMaps[MAP_ALLOW_LIMIT]; // ì–´ë–¤ ë§µì„ ê´€ì¥í•˜ê³  ìˆëŠ”ê°€?
 
 	TItemIDRangeTable m_itemRange;
 	TItemIDRangeTable m_itemSpareRange;
