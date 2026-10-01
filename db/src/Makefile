@@ -8,6 +8,7 @@ DB_VERSION = $(shell cat ../../__REVISION__)
 INCDIR =
 LIBDIR =
 BINDIR = ..
+DEPLOYDIR ?= /usr/home/game/share/bin
 OBJDIR = .obj
 $(shell if [ ! -d $(OBJDIR) ]; then mkdir $(OBJDIR); fi)
 
@@ -125,7 +126,9 @@ $(OBJDIR):
 	@mkdir $(OBJDIR)
 
 symlink:
-	@ln -fs db_r$(DB_VERSION) $(BINDIR)/db_symlink
+	@mkdir -p $(DEPLOYDIR)
+	@ln -fs $(abspath $(MAIN_TARGET)) $(DEPLOYDIR)/db
+	@echo "db -> $(abspath $(MAIN_TARGET))"
 
 strip:
 	@cp $(BINDIR)/db_r$(DB_VERSION) $(BINDIR)/db_r
