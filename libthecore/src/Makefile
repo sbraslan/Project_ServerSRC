@@ -1,7 +1,4 @@
-CCACHE ?= $(shell command -v ccache 2>/dev/null || command -v ccache4 2>/dev/null)
-CCACHE_PREFIX := $(if $(strip $(CCACHE)),$(CCACHE) ,)
-
-CC	= $(CCACHE_PREFIX)g++10
+CC	= g++10
 BIN_DIR = ../lib
 BIN     = $(BIN_DIR)/libthecore.a
 INCLUDE = ../include
