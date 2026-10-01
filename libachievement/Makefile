@@ -1,4 +1,4 @@
-CXX	= g++10
+CXX	= g++14
 BIN_DIR = lib
 BIN     = $(BIN_DIR)/libachievement.a
 INCLUDE = .
