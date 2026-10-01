@@ -46,27 +46,21 @@ CFLAGS += -fstack-protector-all
 # Version defines
 CFLAGS += -D__USER__=\"$(USER)\" -D__HOSTNAME__=\"$(HOSTNAME)\" -D__PWD__=\"$(PWD)\" -D__GAME_VERSION__=\"$(GAME_VERSION)\"
 
-# Boost
-INCDIR += -I../../../Extern/include/boost
+# Boost (native FreeBSD amd64 package)
+INCDIR += -I/usr/local/include
 
-# DevIL
-INCDIR += -I../../../Extern/include/IL
-LIBS += ../../../Extern/lib/libIL.a\
-		../../../Extern/lib/libjasper.a\
-		../../../Extern/lib/libpng.a\
-		../../../Extern/lib/libtiff.a\
-		../../../Extern/lib/libjbig.a\
-		../../../Extern/lib/libmng.a\
-		/usr/lib/liblzma.a\
-		../../../Extern/lib/liblcms.a\
-		../../../Extern/lib/libjpeg.a
+# DevIL (native FreeBSD amd64 package)
+INCDIR += -I/usr/local/include/IL
+LIBDIR += -L/usr/local/lib
+LIBS += -lIL
 
-# MySQL
+# MariaDB/MySQL client compatibility library (native FreeBSD amd64 package)
 INCDIR += -I/usr/local/include/mysql
-LIBS += /usr/local/lib/mysql/libmysqlclient.a /usr/lib/libz.a
+LIBDIR += -L/usr/local/lib/mysql
+LIBS += -lmysqlclient -lz
 
-# CryptoPP
-LIBS += ../../../Extern/lib/libcryptopp.a
+# CryptoPP (native FreeBSD amd64 package)
+LIBS += -lcryptopp
 
 # OpenSSL
 INCDIR += -I/usr/include
