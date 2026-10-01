@@ -1,6 +1,7 @@
 #ifndef __INC_METIN_II_STL_H__
 #define __INC_METIN_II_STL_H__
 
+#include <cstdint>
 #include <vector>
 #include <string>
 #include <map>
