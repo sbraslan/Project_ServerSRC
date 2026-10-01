@@ -1,4 +1,7 @@
-CXX	= g++14
+CCACHE ?= $(shell command -v ccache 2>/dev/null || command -v ccache4 2>/dev/null)
+CCACHE_PREFIX := $(if $(strip $(CCACHE)),$(CCACHE) ,)
+
+CXX	= $(CCACHE_PREFIX)g++14
 
 PLATFORM = $(shell file /bin/ls | cut -d' ' -f3 | cut -d'-' -f1)
 
