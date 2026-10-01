@@ -130,7 +130,7 @@ void CPeer::SetP2PPort(uint16_t wPort)
 	m_wP2PPort = wPort;
 }
 
-void CPeer::SetMaps(long * pl)
+void CPeer::SetMaps(const int32_t * pl)
 {
 	thecore_memcpy(m_alMaps, pl, sizeof(m_alMaps));
 }
