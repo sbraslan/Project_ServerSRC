@@ -100,6 +100,16 @@ MAIN_TARGET = $(BINDIR)/db_r$(DB_VERSION)
 
 default: $(MAIN_TARGET)
 
+.PHONY: cache-info
+cache-info:
+ifneq ($(strip $(CCACHE)),)
+	@echo "ccache: $(CCACHE)"
+	@$(CCACHE) -s
+else
+	@echo "ccache not found"
+	@echo "Install on FreeBSD with: pkg install ccache4"
+endif
+
 $(MAIN_TARGET): $(CPPOBJS)
 	@echo -e "\033[0;31m [linking] \033[0m " $(MAIN_TARGET)
 #	@echo linking $(MAIN_TARGET)
