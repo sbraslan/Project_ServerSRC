@@ -458,7 +458,7 @@ public:
 
 	void SetWarData(int iWin, int iDraw, int iLoss) noexcept { m_data.win = iWin, m_data.draw = iDraw, m_data.loss = iLoss; }
 #ifdef ENABLE_GUILD_WAR_SCORE
-	void SetNewWarData(long iWin[3], long iDraw[3], long iLoss[3]) noexcept
+	void SetNewWarData(const int32_t iWin[3], const int32_t iDraw[3], const int32_t iLoss[3]) noexcept
 	{
 		for (int i = 0; i < 3; ++i)
 		{
