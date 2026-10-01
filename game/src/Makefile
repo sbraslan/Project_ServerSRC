@@ -356,6 +356,7 @@ limit_time:
 $(CRYPTOPP_LIB):
 	@echo "Building bundled Crypto++ with GCC14 (amd64)"
 	@rm -f $(CRYPTOPP_LIB)
+	@rm -f $(CRYPTOPP_DIR)/*.o
 	$(MAKE) -C $(CRYPTOPP_DIR) clean
 	$(MAKE) -C $(CRYPTOPP_DIR) libcryptopp.a
 
