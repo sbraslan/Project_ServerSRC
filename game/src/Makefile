@@ -36,7 +36,7 @@ LIBS = -lm -lmd
 CFLAGS  = -m64 -g -w -O2 -pipe -fexceptions -fno-strict-aliasing -pthread -D_THREAD_SAFE -DNDEBUG
 CFLAGS += -Wno-deprecated-declarations -Wno-nonnull-compare -Wno-deprecated-declarations -Wno-array-bounds -Wno-address
 CFLAGS += -Wno-int-in-bool-context -Wno-format-truncation -Wno-stringop-truncation
-CXXFLAGS = -std=c++20 -Wl,-rpath=/usr/local/lib/gcc14
+CXXFLAGS = -std=c++20 -Wl,-rpath=/usr/local/lib/gcc14 -DCRYPTOPP_DISABLE_ASM=1
 
 ifeq ($(ENABLE_STATIC), 1)
 CFLAGS += -static
