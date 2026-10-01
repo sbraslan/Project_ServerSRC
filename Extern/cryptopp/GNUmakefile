@@ -131,7 +131,7 @@ ifeq ($(SUN_COMPILER),1)
     CXXFLAGS ?= -DNDEBUG -g -xO3
   endif
 else
-  CXXFLAGS ?= -m64 -DNDEBUG -g2 -O3
+  CXXFLAGS ?= -m64 -DNDEBUG -g2 -O3 -DCRYPTOPP_DISABLE_ASM=1
 endif
 
 # Default prefix for make install
