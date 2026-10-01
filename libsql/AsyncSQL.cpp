@@ -140,7 +140,7 @@ bool CAsyncSQL::Connect()
 	if (0 != mysql_options(&m_hDB, MYSQL_OPT_RECONNECT, &reconnect))
 		fprintf(stderr, "mysql_option: %s\n", mysql_error(&m_hDB));
 
-	fprintf(stdout, "AsyncSQL: connected to %s (reconnect %d)\n", m_stHost.c_str(), m_hDB.reconnect);
+	fprintf(stdout, "AsyncSQL: connected to %s (reconnect %d)\n", m_stHost.c_str(), static_cast<int>(reconnect));
 
 	// The db cache gets the locale from the LOCALE table of the common db, and then modifies the character set.
 	// Therefore, even though the character set cannot be determined because the locale is not known when making the first connection,
