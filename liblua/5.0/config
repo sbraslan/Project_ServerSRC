@@ -108,9 +108,7 @@ EXTRA_LIBS= -lm
 # You need an ANSI C compiler. gcc is a popular one. We do not use -ansi in
 # WARN because it disables POSIX features used in the libraries.
 #
-CCACHE ?= $(shell command -v ccache 2>/dev/null || command -v ccache4 2>/dev/null)
-CCACHE_PREFIX := $(if $(strip $(CCACHE)),$(CCACHE) ,)
-CC= $(CCACHE_PREFIX)gcc10
+CC= gcc10
 WARN= -m32 -Wall
 
 # ------------------------------------------------------------------ C options
