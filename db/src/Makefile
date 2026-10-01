@@ -31,12 +31,13 @@ endif
 # Version defines
 CFLAGS += -D__USER__=\"$(USER)\" -D__HOSTNAME__=\"$(HOSTNAME)\" -D__PWD__=\"$(PWD)\" -D__DB_VERSION__=\"$(DB_VERSION)\"
 
-# Boost
-INCDIR += -I../../../Extern/include/boost
+# Boost (native FreeBSD amd64 package)
+INCDIR += -I/usr/local/include
 
-# MySQL
+# MariaDB/MySQL client compatibility library (native FreeBSD amd64 package)
 INCDIR += -I/usr/local/include/mysql
-LIBS += /usr/local/lib/mysql/libmysqlclient.a /usr/lib/libz.a
+LIBDIR += -L/usr/local/lib/mysql
+LIBS += -lmysqlclient -lz
 
 # Project Libraries
 INCDIR += -I/usr/local/include
