@@ -1,4 +1,4 @@
-CC = g++10
+CC = g++14
 
 DB_VERSION = $(shell cat ../../__REVISION__)
 
@@ -22,7 +22,7 @@ endif
 CFLAGS  = -m64 -g -w -O2 -pipe -fno-rtti -fno-exceptions -Wno-long-long -pthread -D_THREAD_SAFE
 CFLAGS += -Wno-deprecated-declarations -Wno-nonnull-compare -Wno-deprecated-declarations -Wno-array-bounds -Wno-address\
 			-Wno-uninitialized -Wno-return-type -Wno-unused-but-set-variable -Wno-sign-compare -Wno-unused-variable -Wno-sequence-point -Wno-reorder
-CXXFLAGS = -std=c++20 -Wl,-rpath=/usr/local/lib/gcc10
+CXXFLAGS = -std=c++20 -Wl,-rpath=/usr/local/lib/gcc14
 
 ifeq ($(ENABLE_STATIC), 1)
 CFLAGS += -static
