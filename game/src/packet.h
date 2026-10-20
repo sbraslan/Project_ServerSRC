@@ -4448,8 +4448,8 @@ typedef struct SPacketGCBiologManagerInfo
 	uint32_t iRequiredItem;
 	uint16_t wGivenItems;
 	uint16_t wRequiredItemCount;
-	time_t iGlobalCooldown;
-	time_t iCooldown;
+	int32_t iGlobalCooldown;
+	int32_t iCooldown;
 	bool iCooldownReminder;
 	uint8_t bChance;
 	uint16_t wApplyType[MAX_BONUSES_LENGTH]; //@fixme532
