@@ -513,7 +513,7 @@ typedef struct SPlayerSkill
 {
 	uint8_t bMasterType;
 	uint8_t bLevel;
-	time_t tNextRead;
+	int32_t tNextRead;
 } TPlayerSkill;
 
 struct THorseInfo

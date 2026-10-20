@@ -691,40 +691,38 @@ typedef struct character_point
 #endif
 } CHARACTER_POINT;
 
-//@fixme199 BEGIN
-/*struct PlayerSlotT
+//@fixme199 BEGIN - RAMTEST PlayerSlots
+struct PlayerSlotT
 {
-	// Inventory
-	std::array<LPITEM, INVENTORY_SLOT_COUNT> pInventoryItems;
-	std::array<uint16_t, INVENTORY_SLOT_COUNT > wInventoryItemGrid;
-	// Equipment
-	std::array<LPITEM, EQUIPMENT_SLOT_COUNT> pEquipmentItems;
-	std::array<uint8_t, EQUIPMENT_SLOT_COUNT > bEquipmentItemGrid;
-	// Belt
-	std::array<LPITEM, BELT_INVENTORY_SLOT_COUNT> pBeltItems;
-	std::array<uint8_t, BELT_INVENTORY_SLOT_COUNT > bBeltGrid;
-	// Dragonsoul
-	std::array<LPITEM, DRAGON_SOUL_INVENTORY_MAX_NUM> pDSItems;
-	std::array<uint16_t, DRAGON_SOUL_INVENTORY_MAX_NUM > wDSItemGrid;
-	// Offlineshop
+    LPITEM pInventoryItems[INVENTORY_SLOT_COUNT]{};
+    uint16_t wInventoryItemGrid[INVENTORY_SLOT_COUNT]{};
+
+    LPITEM pEquipmentItems[EQUIPMENT_SLOT_COUNT]{};
+    uint8_t bEquipmentItemGrid[EQUIPMENT_SLOT_COUNT]{};
+
+    LPITEM pBeltItems[BELT_INVENTORY_SLOT_COUNT]{};
+    uint8_t bBeltGrid[BELT_INVENTORY_SLOT_COUNT]{};
+
+    LPITEM pDSItems[DRAGON_SOUL_INVENTORY_MAX_NUM]{};
+    uint16_t wDSItemGrid[DRAGON_SOUL_INVENTORY_MAX_NUM]{};
+
 #ifdef ENABLE_PREMIUM_PRIVATE_SHOP
-	std::array<LPITEM, SHOP_INVENTORY_MAX_NUM> pShopItems;
-	std::array<uint8_t, SHOP_INVENTORY_MAX_NUM > bShopItemGrid;
+    LPITEM pShopItems[SHOP_INVENTORY_MAX_NUM]{};
+    uint8_t bShopItemGrid[SHOP_INVENTORY_MAX_NUM]{};
 #endif
-	// Switchbot
+
 #ifdef ENABLE_SWITCHBOT
-	std::array<LPITEM, SWITCHBOT_SLOT_COUNT > pSwitchbotItems;
+    LPITEM pSwitchbotItems[SWITCHBOT_SLOT_COUNT]{};
 #endif
-	// Extra EQ-Page
+
 #ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
-	std::array<LPITEM, ADDITIONAL_EQUIPMENT_MAX_SLOT > pAdditionalEquipmentItem_1;
+    LPITEM pAdditionalEquipmentItem_1[ADDITIONAL_EQUIPMENT_MAX_SLOT]{};
 #endif
+
 #ifndef ENABLE_CUBE_RENEWAL
-	std::array<LPITEM, CUBE_MAX_NUM > pCubeItems;
+    LPITEM pCubeItems[CUBE_MAX_NUM]{};
 #endif
-	// Quickslot
-	//std::array<TQuickSlot, QUICKSLOT_MAX_NUM> pQuickslot;
-};*/
+};
 //@fixme199 END
 
 /* Unsaved character data */
@@ -750,45 +748,11 @@ typedef struct character_point_instant
 
 	uint32_t parts[PART_MAX_NUM]; //@fixme479 - uint16_t -> uint32_t
 
-	// Oh... I can't do it without really swearing.
-	// Char manages the grid as a uint8_t array for inventory, and the CGrid for exchange or cube manages the grid.
-	// If you have created a grid, I mean use a grid!!!
-	// I made the same dragon soul stone inventory and made it wrong
-	LPITEM pInventoryItems[INVENTORY_SLOT_COUNT];
-	uint16_t wInventoryItemGrid[INVENTORY_SLOT_COUNT];
-
-	LPITEM pEquipmentItems[EQUIPMENT_SLOT_COUNT];
-	uint8_t bEquipmentItemGrid[EQUIPMENT_SLOT_COUNT];
-
-	LPITEM pBeltItems[BELT_INVENTORY_SLOT_COUNT];
-	uint8_t bBeltGrid[BELT_INVENTORY_SLOT_COUNT];
-
-	// Dragon Soul Inventory.
-	LPITEM pDSItems[DRAGON_SOUL_INVENTORY_MAX_NUM];
-	uint16_t wDSItemGrid[DRAGON_SOUL_INVENTORY_MAX_NUM];
-
 #ifdef ENABLE_ATTR_6TH_7TH
 	LPITEM pNPCStorageItems;
 #endif
 
-#ifdef ENABLE_PREMIUM_PRIVATE_SHOP
-	LPITEM pShopItems[SHOP_INVENTORY_MAX_NUM];
-	uint8_t bShopItemGrid[SHOP_INVENTORY_MAX_NUM];
-#endif
-
-#ifdef ENABLE_SWITCHBOT
-	LPITEM pSwitchbotItems[SWITCHBOT_SLOT_COUNT];
-#endif
-
-#ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
-	LPITEM pAdditionalEquipmentItem_1[ADDITIONAL_EQUIPMENT_MAX_SLOT];
-#endif
-
-	// by mhh
-#ifndef ENABLE_CUBE_RENEWAL
-	LPITEM pCubeItems[CUBE_MAX_NUM];
-#endif
-	LPCHARACTER pCubeNpc;
+LPCHARACTER pCubeNpc;
 
 	LPCHARACTER battle_victim;
 
@@ -1359,7 +1323,7 @@ protected:
 
 	CHARACTER_POINT m_points;
 	CHARACTER_POINT_INSTANT m_pointsInstant;
-	//std::unique_ptr<PlayerSlotT> m_PlayerSlots;
+	std::unique_ptr<PlayerSlotT> m_PlayerSlots;
 
 	int m_iMoveCount;
 	uint32_t m_dwPlayStartTime;

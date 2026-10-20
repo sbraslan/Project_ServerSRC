@@ -492,8 +492,8 @@ uint8_t CHARACTER::GetExtendSpecialItemWindowType(LPITEM item)
 
 LPITEM CHARACTER::GetItem(TItemPos Cell) const
 {
-	/*if (!m_PlayerSlots) //@fixme199
-		return nullptr;*/
+	if (!m_PlayerSlots)
+		return nullptr;
 
 	if (!IsValidItemPosition(Cell))
 		return nullptr;
@@ -509,7 +509,7 @@ LPITEM CHARACTER::GetItem(TItemPos Cell) const
 				sys_err("CHARACTER::GetItem: window_type: %d -> invalid inventory item cell %d", window_type, wCell);
 				return nullptr;
 			}
-			return m_pointsInstant.pInventoryItems[wCell];
+			return m_PlayerSlots->pInventoryItems[wCell];
 
 		case EQUIPMENT:
 			if (wCell >= EQUIPMENT_SLOT_COUNT) // need review related about ds, because when you equip a ds item is in EQUIPMENT too
@@ -517,7 +517,7 @@ LPITEM CHARACTER::GetItem(TItemPos Cell) const
 				sys_err("CHARACTER::GetItem: window_type: %d -> invalid equipment item cell %d", window_type, wCell);
 				return nullptr;
 			}
-			return m_pointsInstant.pEquipmentItems[wCell];
+			return m_PlayerSlots->pEquipmentItems[wCell];
 
 		case BELT_INVENTORY:
 			if (wCell >= BELT_INVENTORY_SLOT_COUNT)
@@ -525,7 +525,7 @@ LPITEM CHARACTER::GetItem(TItemPos Cell) const
 				sys_err("CHARACTER::GetItem: window_type: %d -> invalid belt item cell %d", window_type, wCell);
 				return nullptr;
 			}
-			return m_pointsInstant.pBeltItems[wCell];
+			return m_PlayerSlots->pBeltItems[wCell];
 
 		case DRAGON_SOUL_INVENTORY:
 			if (wCell >= DRAGON_SOUL_INVENTORY_MAX_NUM)
@@ -533,7 +533,7 @@ LPITEM CHARACTER::GetItem(TItemPos Cell) const
 				sys_err("CHARACTER::GetItem: window_type: %d -> invalid DS item cell %d", window_type, wCell);
 				return nullptr;
 			}
-			return m_pointsInstant.pDSItems[wCell];
+			return m_PlayerSlots->pDSItems[wCell];
 
 #ifdef ENABLE_PREMIUM_PRIVATE_SHOP
 		case PREMIUM_PRIVATE_SHOP:
@@ -542,7 +542,7 @@ LPITEM CHARACTER::GetItem(TItemPos Cell) const
 				sys_err("CHARACTER::GetItem: window_type: %d -> invalid shop item cell %d", window_type, wCell);
 				return nullptr;
 			}
-			return m_pointsInstant.pShopItems[wCell];
+			return m_PlayerSlots->pShopItems[wCell];
 #endif
 
 #ifdef ENABLE_SWITCHBOT
@@ -552,7 +552,7 @@ LPITEM CHARACTER::GetItem(TItemPos Cell) const
 				sys_err("CHARACTER::GetItem: window_type: %d -> invalid SWITCHBOT item cell %d", window_type, wCell);
 				return nullptr;
 			}
-			return m_pointsInstant.pSwitchbotItems[wCell];
+			return m_PlayerSlots->pSwitchbotItems[wCell];
 #endif
 
 #ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
@@ -562,7 +562,7 @@ LPITEM CHARACTER::GetItem(TItemPos Cell) const
 				sys_err("CHARACTER::GetItem: window_type: %d -> invalid ADDITIONAL_EQUIPMENT_1 item cell %d", window_type, wCell);
 				return nullptr;
 			}
-			return m_pointsInstant.pAdditionalEquipmentItem_1[wCell];
+			return m_PlayerSlots->pAdditionalEquipmentItem_1[wCell];
 #endif
 
 		default:
@@ -611,8 +611,13 @@ LPITEM CHARACTER::GetItem_NEW(const TItemPos &Cell) const
 
 void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 {
-	/*if (!m_PlayerSlots) //@fixme199
-		return;*/
+	if (!m_PlayerSlots)
+	{
+		if (!pItem)
+			return;
+
+		m_PlayerSlots = std::make_unique<PlayerSlotT>();
+	}
 
 	const uint16_t wCell = Cell.cell;
 	const uint8_t window_type = Cell.window_type;
@@ -640,7 +645,7 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 				return;
 			}
 
-			LPITEM pOld = m_pointsInstant.pInventoryItems[wCell];
+			LPITEM pOld = m_PlayerSlots->pInventoryItems[wCell];
 
 			if (pOld)
 			{
@@ -659,10 +664,10 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 							continue;
 						}
 
-						if (m_pointsInstant.pInventoryItems[p] && m_pointsInstant.pInventoryItems[p] != pOld)
+						if (m_PlayerSlots->pInventoryItems[p] && m_PlayerSlots->pInventoryItems[p] != pOld)
 							continue;
 
-						m_pointsInstant.wInventoryItemGrid[p] = 0;
+						m_PlayerSlots->wInventoryItemGrid[p] = 0;
 					}
 				}
 #ifdef ENABLE_SPECIAL_INVENTORY
@@ -689,15 +694,15 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 							}
 						}
 
-						if (m_pointsInstant.pInventoryItems[p] && m_pointsInstant.pInventoryItems[p] != pOld)
+						if (m_PlayerSlots->pInventoryItems[p] && m_PlayerSlots->pInventoryItems[p] != pOld)
 							continue;
 
-						m_pointsInstant.wInventoryItemGrid[p] = 0;
+						m_PlayerSlots->wInventoryItemGrid[p] = 0;
 					}
 				}
 #endif
 				else
-					m_pointsInstant.wInventoryItemGrid[wCell] = 0;
+					m_PlayerSlots->wInventoryItemGrid[wCell] = 0;
 			}
 
 			if (pItem)
@@ -719,7 +724,7 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 
 						// wCell + 1 is the same when checking empty
 						// Items are for exception handling
-						m_pointsInstant.wInventoryItemGrid[p] = wCell + 1;
+						m_PlayerSlots->wInventoryItemGrid[p] = wCell + 1;
 					}
 				}
 #ifdef ENABLE_SPECIAL_INVENTORY
@@ -748,15 +753,15 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 
 						// wCell + 1 is the same when checking empty
 						// Items are for exception handling
-						m_pointsInstant.wInventoryItemGrid[p] = wCell + 1;
+						m_PlayerSlots->wInventoryItemGrid[p] = wCell + 1;
 					}
 				}
 #endif
 				else
-					m_pointsInstant.wInventoryItemGrid[wCell] = wCell + 1;
+					m_PlayerSlots->wInventoryItemGrid[wCell] = wCell + 1;
 			}
 
-			m_pointsInstant.pInventoryItems[wCell] = pItem;
+			m_PlayerSlots->pInventoryItems[wCell] = pItem;
 		}
 		break;
 
@@ -768,7 +773,7 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 				return;
 			}
 
-			LPITEM pOld = m_pointsInstant.pEquipmentItems[wCell];
+			LPITEM pOld = m_PlayerSlots->pEquipmentItems[wCell];
 
 			if (pOld)
 			{
@@ -781,14 +786,14 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 						if (p >= DRAGON_SOUL_INVENTORY_MAX_NUM)
 							continue;
 
-						if (m_pointsInstant.pEquipmentItems[p] && m_pointsInstant.pEquipmentItems[p] != pOld)
+						if (m_PlayerSlots->pEquipmentItems[p] && m_PlayerSlots->pEquipmentItems[p] != pOld)
 							continue;
 
-						m_pointsInstant.bEquipmentItemGrid[p] = 0;
+						m_PlayerSlots->bEquipmentItemGrid[p] = 0;
 					}
 				}
 				else
-					m_pointsInstant.bEquipmentItemGrid[wCell] = 0;
+					m_PlayerSlots->bEquipmentItemGrid[wCell] = 0;
 			}
 
 			if (pItem)
@@ -802,20 +807,20 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 						if (p >= EQUIPMENT_SLOT_COUNT)
 							continue;
 
-						m_pointsInstant.bEquipmentItemGrid[p] = wCell + 1;
+						m_PlayerSlots->bEquipmentItemGrid[p] = wCell + 1;
 					}
 				}
 				else
-					m_pointsInstant.bEquipmentItemGrid[wCell] = wCell + 1;
+					m_PlayerSlots->bEquipmentItemGrid[wCell] = wCell + 1;
 			}
 
-			m_pointsInstant.pEquipmentItems[wCell] = pItem;
+			m_PlayerSlots->pEquipmentItems[wCell] = pItem;
 		}
 		break;
 
 		case BELT_INVENTORY:
 		{
-			LPITEM pOld = m_pointsInstant.pBeltItems[wCell];
+			LPITEM pOld = m_PlayerSlots->pBeltItems[wCell];
 
 			if (pOld)
 			{
@@ -828,14 +833,14 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 						if (p >= BELT_INVENTORY_SLOT_COUNT)
 							continue;
 
-						if (m_pointsInstant.pBeltItems[p] && m_pointsInstant.pBeltItems[p] != pOld)
+						if (m_PlayerSlots->pBeltItems[p] && m_PlayerSlots->pBeltItems[p] != pOld)
 							continue;
 
-						m_pointsInstant.bBeltGrid[p] = 0;
+						m_PlayerSlots->bBeltGrid[p] = 0;
 					}
 				}
 				else
-					m_pointsInstant.bBeltGrid[wCell] = 0;
+					m_PlayerSlots->bBeltGrid[wCell] = 0;
 			}
 
 			if (pItem)
@@ -857,20 +862,20 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 
 						// wCell + 1 is the same when checking empty
 						// Items are for exception handling
-						m_pointsInstant.bBeltGrid[p] = wCell + 1;
+						m_PlayerSlots->bBeltGrid[p] = wCell + 1;
 					}
 				}
 				else
-					m_pointsInstant.bBeltGrid[wCell] = wCell + 1;
+					m_PlayerSlots->bBeltGrid[wCell] = wCell + 1;
 			}
 
-			m_pointsInstant.pBeltItems[wCell] = pItem;
+			m_PlayerSlots->pBeltItems[wCell] = pItem;
 		}
 		break;
 
 		case DRAGON_SOUL_INVENTORY:
 		{
-			LPITEM pOld = m_pointsInstant.pDSItems[wCell];
+			LPITEM pOld = m_PlayerSlots->pDSItems[wCell];
 
 			if (pOld)
 			{
@@ -883,14 +888,14 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 						if (p >= DRAGON_SOUL_INVENTORY_MAX_NUM)
 							continue;
 
-						if (m_pointsInstant.pDSItems[p] && m_pointsInstant.pDSItems[p] != pOld)
+						if (m_PlayerSlots->pDSItems[p] && m_PlayerSlots->pDSItems[p] != pOld)
 							continue;
 
-						m_pointsInstant.wDSItemGrid[p] = 0;
+						m_PlayerSlots->wDSItemGrid[p] = 0;
 					}
 				}
 				else
-					m_pointsInstant.wDSItemGrid[wCell] = 0;
+					m_PlayerSlots->wDSItemGrid[wCell] = 0;
 			}
 
 			if (pItem)
@@ -912,14 +917,14 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 
 						// wCell + 1 is the same when checking empty
 						// Items are for exception handling
-						m_pointsInstant.wDSItemGrid[p] = wCell + 1;
+						m_PlayerSlots->wDSItemGrid[p] = wCell + 1;
 					}
 				}
 				else
-					m_pointsInstant.wDSItemGrid[wCell] = wCell + 1;
+					m_PlayerSlots->wDSItemGrid[wCell] = wCell + 1;
 			}
 
-			m_pointsInstant.pDSItems[wCell] = pItem;
+			m_PlayerSlots->pDSItems[wCell] = pItem;
 		}
 		break;
 
@@ -932,7 +937,7 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 				return;
 			}
 
-			LPITEM pOld = m_pointsInstant.pShopItems[wCell];
+			LPITEM pOld = m_PlayerSlots->pShopItems[wCell];
 
 			if (pOld)
 			{
@@ -943,10 +948,10 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 					if (p >= SHOP_INVENTORY_MAX_NUM)
 						continue;
 
-					if (m_pointsInstant.pShopItems[p] && m_pointsInstant.pShopItems[p] != pOld)
+					if (m_PlayerSlots->pShopItems[p] && m_PlayerSlots->pShopItems[p] != pOld)
 						continue;
 
-					m_pointsInstant.bShopItemGrid[p] = 0;
+					m_PlayerSlots->bShopItemGrid[p] = 0;
 				}
 			}
 
@@ -961,11 +966,11 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 
 					// wCell + 1 is the same when checking empty
 					// Items are for exception handling
-					m_pointsInstant.bShopItemGrid[p] = wCell + 1;
+					m_PlayerSlots->bShopItemGrid[p] = wCell + 1;
 				}
 			}
 
-			m_pointsInstant.pShopItems[wCell] = pItem;
+			m_PlayerSlots->pShopItems[wCell] = pItem;
 		}
 		break;
 #endif
@@ -979,7 +984,7 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 			return;
 		}
 
-		const LPITEM& pOld = m_pointsInstant.pSwitchbotItems[wCell];
+		const LPITEM& pOld = m_PlayerSlots->pSwitchbotItems[wCell];
 		if (pOld && pItem)
 			return;
 
@@ -988,7 +993,7 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 		else
 			CSwitchbotManager::Instance().UnregisterItem(GetPlayerID(), wCell);
 
-		m_pointsInstant.pSwitchbotItems[wCell] = pItem;
+		m_PlayerSlots->pSwitchbotItems[wCell] = pItem;
 	}
 	break;
 #endif
@@ -1015,11 +1020,11 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 				sys_err("CHARACTER::SetItem: invalid ADDITIONAL_EQUIPMENT_1 item cell %d", wCell);
 				return;
 			}
-			const LPITEM& pOld = m_pointsInstant.pAdditionalEquipmentItem_1[wCell];
+			const LPITEM& pOld = m_PlayerSlots->pAdditionalEquipmentItem_1[wCell];
 			if (pOld && pItem)
 				return;
 
-			m_pointsInstant.pAdditionalEquipmentItem_1[wCell] = pItem;
+			m_PlayerSlots->pAdditionalEquipmentItem_1[wCell] = pItem;
 		}
 		break;
 #endif
@@ -1150,8 +1155,8 @@ void CHARACTER::SetItem(TItemPos Cell, LPITEM pItem, bool isHighLight)
 #ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
 LPITEM CHARACTER::GetWearDefault(uint8_t bCell) const
 {
-	/*if (!m_PlayerSlots) //@fixme199
-		return nullptr;*/
+	if (!m_PlayerSlots)
+		return nullptr;
 
 	// > WEAR_MAX_NUM: Dragon Soul Slots.
 	if (bCell >= WEAR_MAX_NUM + DRAGON_SOUL_DECK_MAX_NUM * DS_SLOT_MAX)
@@ -1160,7 +1165,7 @@ LPITEM CHARACTER::GetWearDefault(uint8_t bCell) const
 		return nullptr;
 	}
 
-	return m_pointsInstant.pEquipmentItems[bCell];
+	return m_PlayerSlots->pEquipmentItems[bCell];
 }
 
 void CHARACTER::SetWearDefault(uint8_t bCell, LPITEM item)
@@ -1178,8 +1183,8 @@ void CHARACTER::SetWearDefault(uint8_t bCell, LPITEM item)
 
 LPITEM CHARACTER::GetWear(uint16_t bCell) const noexcept	//@fixme479 uint8_t -> uint16_t
 {
-	/*if (!m_PlayerSlots) //@fixme199
-		return nullptr;*/
+	if (!m_PlayerSlots)
+		return nullptr;
 
 	// > WEAR_MAX_NUM: Dragon Soul Slots.
 	if (bCell >= WEAR_MAX_NUM + DRAGON_SOUL_DECK_MAX_NUM * DS_SLOT_MAX)
@@ -1190,12 +1195,12 @@ LPITEM CHARACTER::GetWear(uint16_t bCell) const noexcept	//@fixme479 uint8_t -> 
 
 #ifdef ENABLE_ADDITIONAL_EQUIPMENT_PAGE
 	if (!CheckAdditionalEquipment(bCell))
-		return m_pointsInstant.pEquipmentItems[bCell];
+		return m_PlayerSlots->pEquipmentItems[bCell];
 	else
-		return m_pointsInstant.pAdditionalEquipmentItem_1[bCell];
+		return m_PlayerSlots->pAdditionalEquipmentItem_1[bCell];
 #endif
 
-	return m_pointsInstant.pEquipmentItems[bCell];
+	return m_PlayerSlots->pEquipmentItems[bCell];
 }
 
 void CHARACTER::SetWear(uint16_t bCell, LPITEM item)	//@fixme479 uint8_t -> uint16_t
@@ -1347,6 +1352,9 @@ void CHARACTER::ClearShopItem()
 
 bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell) const
 {
+	if (!m_PlayerSlots)
+		return false;
+
 	switch (Cell.window_type)
 	{
 		case INVENTORY:
@@ -1367,9 +1375,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 				if (false == CBeltInventoryHelper::IsAvailableCell(wCell - BELT_INVENTORY_SLOT_START, beltItem->GetValue(0)))
 					return false;
 
-				if (m_pointsInstant.wInventoryItemGrid[wCell])
+				if (m_PlayerSlots->wInventoryItemGrid[wCell])
 				{
-					if (m_pointsInstant.wInventoryItemGrid[wCell] == iExceptionCell)
+					if (m_PlayerSlots->wInventoryItemGrid[wCell] == iExceptionCell)
 						return true;
 
 					return false;
@@ -1393,9 +1401,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 				return false;
 #endif
 
-			if (m_pointsInstant.wInventoryItemGrid[wCell])
+			if (m_PlayerSlots->wInventoryItemGrid[wCell])
 			{
-				if (m_pointsInstant.wInventoryItemGrid[wCell] == iExceptionCell)
+				if (m_PlayerSlots->wInventoryItemGrid[wCell] == iExceptionCell)
 				{
 					if (bSize == 1)
 						return true;
@@ -1425,9 +1433,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 							return false;
 #endif
 
-						if (m_pointsInstant.wInventoryItemGrid[p])
+						if (m_PlayerSlots->wInventoryItemGrid[p])
 						{
-							if (m_pointsInstant.wInventoryItemGrid[p] != iExceptionCell)
+							if (m_PlayerSlots->wInventoryItemGrid[p] != iExceptionCell)
 								return false;
 						}
 					} while (++j < bSize);
@@ -1468,9 +1476,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 						return false;
 #endif
 
-					if (m_pointsInstant.wInventoryItemGrid[p])
+					if (m_PlayerSlots->wInventoryItemGrid[p])
 					{
-						if (m_pointsInstant.wInventoryItemGrid[p] != iExceptionCell)
+						if (m_PlayerSlots->wInventoryItemGrid[p] != iExceptionCell)
 							return false;
 					}
 				} while (++j < bSize);
@@ -1490,9 +1498,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 			// Therefore, 1 is added to the iExceptionCell for comparison.
 			iExceptionCell++;
 
-			if (m_pointsInstant.wDSItemGrid[wCell])
+			if (m_PlayerSlots->wDSItemGrid[wCell])
 			{
-				if (m_pointsInstant.wDSItemGrid[wCell] == iExceptionCell)
+				if (m_PlayerSlots->wDSItemGrid[wCell] == iExceptionCell)
 				{
 					if (bSize == 1)
 						return true;
@@ -1506,9 +1514,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 						if (p >= DRAGON_SOUL_INVENTORY_MAX_NUM)
 							return false;
 
-						if (m_pointsInstant.wDSItemGrid[p])
+						if (m_PlayerSlots->wDSItemGrid[p])
 						{
-							if (m_pointsInstant.wDSItemGrid[p] != iExceptionCell)
+							if (m_PlayerSlots->wDSItemGrid[p] != iExceptionCell)
 								return false;
 						}
 					} while (++j < bSize);
@@ -1533,9 +1541,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 					if (p >= DRAGON_SOUL_INVENTORY_MAX_NUM)
 						return false;
 
-					if (m_pointsInstant.wDSItemGrid[p])
+					if (m_PlayerSlots->wDSItemGrid[p])
 					{
-						if (m_pointsInstant.wDSItemGrid[p] != iExceptionCell)
+						if (m_PlayerSlots->wDSItemGrid[p] != iExceptionCell)
 							return false;
 					}
 				} while (++j < bSize);
@@ -1555,9 +1563,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 			// Therefore, 1 is added to iExceptionCell for comparison.
 			iExceptionCell++;
 
-			if (m_pointsInstant.bBeltGrid[wCell])
+			if (m_PlayerSlots->bBeltGrid[wCell])
 			{
-				if (m_pointsInstant.bBeltGrid[wCell] == iExceptionCell)
+				if (m_PlayerSlots->bBeltGrid[wCell] == iExceptionCell)
 				{
 					if (bSize == 1)
 						return true;
@@ -1571,9 +1579,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 						if (p >= BELT_INVENTORY_SLOT_COUNT)
 							return false;
 
-						if (m_pointsInstant.bBeltGrid[p])
+						if (m_PlayerSlots->bBeltGrid[p])
 						{
-							if (m_pointsInstant.bBeltGrid[p] != iExceptionCell)
+							if (m_PlayerSlots->bBeltGrid[p] != iExceptionCell)
 								return false;
 						}
 					} while (++j < bSize);
@@ -1598,9 +1606,9 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 					if (p >= BELT_INVENTORY_SLOT_COUNT)
 						return false;
 
-					if (m_pointsInstant.wInventoryItemGrid[p])
+					if (m_PlayerSlots->wInventoryItemGrid[p])
 					{
-						if (m_pointsInstant.bBeltGrid[p] != iExceptionCell)
+						if (m_PlayerSlots->bBeltGrid[p] != iExceptionCell)
 							return false;
 					}
 				} while (++j < bSize);
@@ -1619,7 +1627,7 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 				return false;
 			}
 
-			if (m_pointsInstant.pSwitchbotItems[wCell])
+			if (m_PlayerSlots->pSwitchbotItems[wCell])
 			{
 				return false;
 			}
@@ -1636,7 +1644,7 @@ bool CHARACTER::IsEmptyItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell
 			if (wCell >= ADDITIONAL_EQUIPMENT_MAX_SLOT)
 				return false;
 
-			if (m_pointsInstant.pAdditionalEquipmentItem_1[wCell])
+			if (m_PlayerSlots->pAdditionalEquipmentItem_1[wCell])
 				return false;
 
 			return true;
@@ -1665,6 +1673,9 @@ int CHARACTER::GetEmptyInventoryCount(uint8_t size) const
 #ifdef ENABLE_SPECIAL_INVENTORY
 bool CHARACTER::IsEmptySpecialItemGrid(TItemPos Cell, uint8_t bSize, int iExceptionCell) const
 {
+	if (!m_PlayerSlots)
+		return false;
+
 	if (bSize > 1)
 	{
 		return false;
@@ -1682,9 +1693,9 @@ bool CHARACTER::IsEmptySpecialItemGrid(TItemPos Cell, uint8_t bSize, int iExcept
 		return false;
 	}
 
-	if (m_pointsInstant.wInventoryItemGrid[wCell])
+	if (m_PlayerSlots->wInventoryItemGrid[wCell])
 	{
-		return m_pointsInstant.wInventoryItemGrid[wCell] == iExceptionCell;
+		return m_PlayerSlots->wInventoryItemGrid[wCell] == iExceptionCell;
 	}
 
 	return true;
@@ -1765,10 +1776,17 @@ int CHARACTER::GetEmptyDragonSoulInventory(LPITEM pItem) const
 
 void CHARACTER::CopyDragonSoulItemGrid(std::vector<uint16_t>& vDragonSoulItemGrid) const
 {
-	vDragonSoulItemGrid.resize(DRAGON_SOUL_INVENTORY_MAX_NUM);
+	vDragonSoulItemGrid.assign(
+		DRAGON_SOUL_INVENTORY_MAX_NUM, 0);
 
-	//std::copy(m_pointsInstant.wDSItemGrid.begin(), m_pointsInstant.wDSItemGrid.end() + DRAGON_SOUL_INVENTORY_MAX_NUM, vDragonSoulItemGrid.begin());
-	std::copy(m_pointsInstant.wDSItemGrid, m_pointsInstant.wDSItemGrid + DRAGON_SOUL_INVENTORY_MAX_NUM, vDragonSoulItemGrid.begin());
+	if (!m_PlayerSlots)
+		return;
+
+	std::copy(
+		m_PlayerSlots->wDSItemGrid,
+		m_PlayerSlots->wDSItemGrid +
+			DRAGON_SOUL_INVENTORY_MAX_NUM,
+		vDragonSoulItemGrid.begin());
 }
 
 int CHARACTER::CountEmptyInventory() const

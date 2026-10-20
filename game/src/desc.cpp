@@ -671,7 +671,7 @@ bool DESC::HandshakeProcess(uint32_t dwTime, long lDelta, bool bInfiniteRetry)
 		return true;
 	}
 
-	long lNewDelta = (long) (dwCurTime - dwTime) / 2;
+	int32_t lNewDelta = (int32_t)(dwCurTime - dwTime) / 2;
 
 	if (lNewDelta < 0)
 	{

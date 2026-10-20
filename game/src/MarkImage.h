@@ -4,7 +4,7 @@
 #include <IL/il.h>
 #include "minilzo.h"
 
-typedef unsigned long Pixel;
+typedef uint32_t Pixel;
 
 struct SGuildMark
 {

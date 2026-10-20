@@ -403,7 +403,7 @@ void CHARACTER::Initialize()
 	memset(&m_points, 0, sizeof(m_points));
 	memset(&m_pointsInstant, 0, sizeof(m_pointsInstant));
 	//m_pointsInstant = {}; //@fixme199
-	//m_PlayerSlots = {}; //@fixme199
+	m_PlayerSlots.reset(); // RAMTEST PlayerSlots
 	memset(&m_quickslot, 0, sizeof(m_quickslot));
 
 	m_bCharType = CHAR_TYPE_MONSTER;
@@ -3333,7 +3333,8 @@ void CHARACTER::SetPlayerProto(const TPlayerTable* t)
 	else
 		SetGMLevel();
 
-	//m_PlayerSlots = std::make_unique<PlayerSlotT>(); //@fixme199
+	if (!m_PlayerSlots)
+		m_PlayerSlots = std::make_unique<PlayerSlotT>(); // RAMTEST PlayerSlots
 	m_bCharType = CHAR_TYPE_PC;
 
 #ifdef ENABLE_PREMIUM_PRIVATE_SHOP
