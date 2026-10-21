@@ -453,6 +453,7 @@ typedef struct SGrowthPetInfo
 	float skill_formula2[3];
 	float next_skill_formula2[3];
 } TGrowthPetInfo;
+static_assert(sizeof(TGrowthPetInfo) == 157, "TGrowthPetInfo wire size changed");
 #endif
 
 typedef struct SPlayerItem
@@ -515,6 +516,7 @@ typedef struct SPlayerSkill
 	uint8_t bLevel;
 	int32_t tNextRead;
 } TPlayerSkill;
+static_assert(sizeof(TPlayerSkill) == 6, "TPlayerSkill wire size changed");
 
 struct THorseInfo
 {
@@ -2110,6 +2112,8 @@ typedef struct SMailBoxTable
 	packet_mailbox_message Message;
 	packet_mailbox_add_data AddData;
 } TMailBoxTable;
+static_assert(sizeof(TPacketGCMailBoxMessage) == 37, "TPacketGCMailBoxMessage wire size changed");
+static_assert(sizeof(TMailBoxTable) == 355, "TMailBoxTable wire size changed");
 #endif
 
 #ifdef ENABLE_BATTLE_PASS_SYSTEM
