@@ -2777,6 +2777,7 @@ typedef struct SPacketGCTime
 	uint8_t bHeader;
 	int32_t time;
 } TPacketGCTime;
+static_assert(sizeof(TPacketGCTime) == 5, "TPacketGCTime wire size changed");
 
 enum class WalkMode
 {
