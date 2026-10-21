@@ -436,9 +436,9 @@ typedef struct SGrowthPetInfo
 	float pet_hp;
 	float pet_def;
 	float pet_sp;
-	time_t pet_birthday;
-	time_t pet_end_time;
-	time_t pet_max_time;
+	int32_t pet_birthday;
+	int32_t pet_end_time;
+	int32_t pet_max_time;
 	uint32_t exp_monster;
 	uint32_t exp_item;
 	uint32_t next_exp_monster;
@@ -447,7 +447,7 @@ typedef struct SGrowthPetInfo
 	uint8_t skill_vnum[3];
 	uint8_t skill_level[3];
 	float skill_spec[3];
-	time_t skill_cool[3];
+	int32_t skill_cool[3];
 	float skill_formula1[3];
 	float next_skill_formula1[3];
 	float skill_formula2[3];
@@ -2095,8 +2095,8 @@ typedef struct packet_mailbox_add_data
 
 typedef struct packet_mailbox_message
 {
-	time_t SendTime;
-	time_t DeleteTime;
+	int32_t SendTime;
+	int32_t DeleteTime;
 	char szTitle[25 + 1];
 	bool bIsGMPost;
 	bool bIsItemExist;
