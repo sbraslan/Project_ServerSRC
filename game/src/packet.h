@@ -2775,7 +2775,7 @@ typedef struct SPacketGCShopSign
 typedef struct SPacketGCTime
 {
 	uint8_t bHeader;
-	time_t time;
+	int32_t time;
 } TPacketGCTime;
 
 enum class WalkMode
