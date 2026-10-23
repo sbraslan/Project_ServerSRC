@@ -401,7 +401,7 @@ bool IntegrityCheckModule(const char *moduleFilename, const byte *expectedModule
 					}
 				}
 
-#if defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(_M_ARM)
+#if (CRYPTOPP_MSC_VERSION >= 1400 && CRYPTOPP_MSC_VERSION < 1920) && (defined(_M_IX86) || defined(_M_X64))
 				// first byte of _CRT_DEBUGGER_HOOK gets modified in memory by the debugger invisibly, so read it from file
 				if (IsDebuggerPresent())
 				{
